@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/left_side_percent">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/game_page_margin">
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:hint="Username/Email"
+                        android:singleLine="true"
+                        android:inputType="textEmailAddress">
+                        <requestFocus/>
+                    </EditText>
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Password"
+                        android:singleLine="true"
+                        android:inputType="textVisiblePassword"/>
+                    <CheckBox
+                        android:id="@+id/mask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mask password"/>
+                    <Button
+                        android:textStyle="bold"
+                        android:id="@+id/sign_in"
+                        android:nextFocusUp="@+id/mask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:text="Sign In"/>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+        <include
+            android:id="@+id/right_side_layout"
+            layout="@layout/right_side_frame"/>
+    </LinearLayout>
+    <include layout="@layout/sliding_menu"/>
+</android.support.v4.widget.DrawerLayout>

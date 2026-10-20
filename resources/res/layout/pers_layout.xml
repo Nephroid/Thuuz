@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/personalize_layout"
+    android:background="@color/sidebar_bg"
+    android:padding="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
+    <com.thuuz.roboto.RobotoTextView
+        android:textSize="@dimen/team_name_size"
+        android:textColor="@color/light_gray"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="50dp"
+        android:text="Personalize Thuuz"
+        custom:typeface="serif"/>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:id="@+id/personalize_now"
+        android:background="@drawable/thuuz_blue_button_selector"
+        android:paddingLeft="25dp"
+        android:paddingTop="8dp"
+        android:paddingRight="25dp"
+        android:paddingBottom="8dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <com.thuuz.roboto.RobotoTextView
+            android:textSize="@dimen/team_name_size"
+            android:textColor="@color/white_ff"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/blue_btn_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Favorites"
+            android:singleLine="false"
+            custom:typeface="6"/>
+    </LinearLayout>
+</LinearLayout>

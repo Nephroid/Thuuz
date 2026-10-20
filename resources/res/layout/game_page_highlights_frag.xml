@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/track_fragment"
+    android:background="@color/game_midbar_bg"
+    android:padding="10dp"
+    android:focusable="false"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.thuuz.roboto.RobotoTextView
+        android:textSize="18sp"
+        android:textColor="@color/teaser_text"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Highlights"
+        custom:typeface="4"
+        style="@style/text_16_bold_f1"/>
+    <com.thuuz.gtv.util.ProtectedListView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/highlights_list"
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/list_ontop_selector"
+        android:drawSelectorOnTop="true"
+        android:divider="@color/transparent"
+        android:dividerHeight="@dimen/tv_list_divider"
+        android:headerDividersEnabled="false"
+        android:footerDividersEnabled="false"/>
+</LinearLayout>

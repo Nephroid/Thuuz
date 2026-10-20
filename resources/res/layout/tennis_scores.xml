@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tennis_scores"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TennisScore">
+        <TextView
+            android:id="@+id/tennis_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TennisScore"/>
+        <TextView
+            android:id="@+id/tennis_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TennisScore"/>
+        <TextView
+            android:id="@+id/tennis_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TennisScore"/>
+        <TextView
+            android:id="@+id/tennis_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TennisScore"/>
+        <TextView
+            android:id="@+id/tennis_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TennisScore"/>
+    </TableRow>
+</TableLayout>

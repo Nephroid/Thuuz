@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center_horizontal"
+    android:id="@+id/popup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/popup_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="10dp"
+        android:maxWidth="400dp"
+        android:layout_centerInParent="true">
+        <TextView
+            android:textSize="22sp"
+            android:textColor="@color/white_f1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/popup_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="400dp"
+            android:text="@string/one_follow_msg"
+            android:singleLine="false"/>
+        <Button
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:id="@+id/add_friends_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Find Friends"
+            android:contentDescription="add friends"
+            style="@style/BlueButton"/>
+    </LinearLayout>
+</RelativeLayout>

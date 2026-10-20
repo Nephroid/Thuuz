@@ -1,0 +1,122 @@
+package com.actionbarsherlock.internal.view.menu;
+
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.View;
+import com.actionbarsherlock.internal.view.menu.MenuBuilder;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
+
+/* loaded from: classes.dex */
+public class SubMenuBuilder extends MenuBuilder implements SubMenu {
+    private MenuItemImpl mItem;
+    private MenuBuilder mParentMenu;
+
+    public SubMenuBuilder(Context context, MenuBuilder menuBuilder, MenuItemImpl menuItemImpl) {
+        super(context);
+        this.mParentMenu = menuBuilder;
+        this.mItem = menuItemImpl;
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder, com.actionbarsherlock.view.Menu
+    public void setQwertyMode(boolean z) {
+        this.mParentMenu.setQwertyMode(z);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public boolean isQwertyMode() {
+        return this.mParentMenu.isQwertyMode();
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public void setShortcutsVisible(boolean z) {
+        this.mParentMenu.setShortcutsVisible(z);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public boolean isShortcutsVisible() {
+        return this.mParentMenu.isShortcutsVisible();
+    }
+
+    public Menu getParentMenu() {
+        return this.mParentMenu;
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public MenuItem getItem() {
+        return this.mItem;
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public void setCallback(MenuBuilder.Callback callback) {
+        this.mParentMenu.setCallback(callback);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public MenuBuilder getRootMenu() {
+        return this.mParentMenu;
+    }
+
+    /* JADX INFO: Access modifiers changed from: package-private */
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public boolean dispatchMenuItemSelected(MenuBuilder menuBuilder, MenuItem menuItem) {
+        return super.dispatchMenuItemSelected(menuBuilder, menuItem) || this.mParentMenu.dispatchMenuItemSelected(menuBuilder, menuItem);
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setIcon(Drawable drawable) {
+        this.mItem.setIcon(drawable);
+        return this;
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setIcon(int i) {
+        this.mItem.setIcon(i);
+        return this;
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setHeaderIcon(Drawable drawable) {
+        return (SubMenu) super.setHeaderIconInt(drawable);
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setHeaderIcon(int i) {
+        return (SubMenu) super.setHeaderIconInt(i);
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setHeaderTitle(CharSequence charSequence) {
+        return (SubMenu) super.setHeaderTitleInt(charSequence);
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setHeaderTitle(int i) {
+        return (SubMenu) super.setHeaderTitleInt(i);
+    }
+
+    @Override // com.actionbarsherlock.view.SubMenu
+    public SubMenu setHeaderView(View view) {
+        return (SubMenu) super.setHeaderViewInt(view);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public boolean expandItemActionView(MenuItemImpl menuItemImpl) {
+        return this.mParentMenu.expandItemActionView(menuItemImpl);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public boolean collapseItemActionView(MenuItemImpl menuItemImpl) {
+        return this.mParentMenu.collapseItemActionView(menuItemImpl);
+    }
+
+    @Override // com.actionbarsherlock.internal.view.menu.MenuBuilder
+    public String getActionViewStatesKey() {
+        int itemId = this.mItem != null ? this.mItem.getItemId() : 0;
+        if (itemId == 0) {
+            return null;
+        }
+        return super.getActionViewStatesKey() + ":" + itemId;
+    }
+}

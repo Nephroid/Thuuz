@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:textStyle="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="@string/dish_pairing"
+        style="@style/text_16_bold_f1"/>
+    <TextView
+        android:textStyle="normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="For information on how to pair your DISH receiver, click the button below."
+        style="@style/text_16_bold_f1"/>
+    <Button
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/pairing_setup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DISH Setup for Google TV"/>
+</LinearLayout>

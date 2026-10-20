@@ -1,0 +1,9 @@
+# Build and temporary files
+build/
+.gradle/
+*.class
+*.dex
+*.apk
+.idea/
+*.iml
+.DS_Store

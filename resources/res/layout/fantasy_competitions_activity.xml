@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/left_side_percent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <com.thuuz.gtv.util.ProtectedListView
+                    android:id="@+id/list"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/game_page_margin"
+                    android:layout_alignParentTop="true">
+                    <requestFocus/>
+                </com.thuuz.gtv.util.ProtectedListView>
+            </RelativeLayout>
+        </LinearLayout>
+        <include
+            android:id="@+id/right_side_layout"
+            layout="@layout/right_side_frame"/>
+    </LinearLayout>
+    <include layout="@layout/sliding_menu"/>
+</android.support.v4.widget.DrawerLayout>

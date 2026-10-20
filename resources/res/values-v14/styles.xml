@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Sherlock.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+    </style>
+    <style name="Widget.Sherlock.ActionBar.Solid" parent="@android:style/Widget.Holo.ActionBar.Solid">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.Solid" parent="@android:style/Widget.Holo.Light.ActionBar.Solid">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.Solid.Inverse" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabView" parent="@android:style/Widget.Holo.ActionBar.TabView">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView" parent="@android:style/Widget.Holo.Light.ActionBar.TabView">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabView.Inverse" parent="@android:style/Widget.Holo.Light.ActionBar.TabView.Inverse">
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabBar" parent="@android:style/Widget.Holo.ActionBar.TabBar">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar" parent="@android:style/Widget.Holo.Light.ActionBar.TabBar">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabBar.Inverse" parent="@android:style/Widget.Holo.Light.ActionBar.TabBar.Inverse">
+    </style>
+    <style name="Widget.Sherlock.ActionBar.TabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabText" parent="@android:style/Widget.Holo.Light.ActionBar.TabText">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionBar.TabText.Inverse" parent="@android:style/Widget.Holo.Light.ActionBar.TabText.Inverse">
+    </style>
+    <style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionButton" parent="@android:style/Widget.Holo.Light.ActionButton">
+    </style>
+    <style name="Widget.Sherlock.ActionButton.CloseMode" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionButton.CloseMode" parent="@android:style/Widget.Holo.Light.ActionButton.CloseMode">
+    </style>
+    <style name="Widget.Sherlock.ActionButton.Overflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionButton.Overflow" parent="@android:style/Widget.Holo.Light.ActionButton.Overflow">
+    </style>
+    <style name="Widget.Sherlock.ActionMode" parent="@android:style/Widget.Holo.ActionMode">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionMode" parent="@android:style/Widget.Holo.Light.ActionMode">
+    </style>
+    <style name="Widget.Sherlock.Light.ActionMode.Inverse" parent="@android:style/Widget.Holo.Light.ActionMode.Inverse">
+    </style>
+    <style name="Widget.Sherlock.PopupMenu" parent="@android:style/Widget.Holo.PopupMenu">
+    </style>
+    <style name="Widget.Sherlock.Light.PopupMenu" parent="@android:style/Widget.Holo.Light.PopupMenu">
+    </style>
+    <style name="Widget.Sherlock.Spinner.DropDown.ActionBar" parent="@android:style/Widget.Holo.Spinner">
+    </style>
+    <style name="Widget.Sherlock.Light.Spinner.DropDown.ActionBar" parent="@android:style/Widget.Holo.Light.Spinner">
+    </style>
+    <style name="Widget.Sherlock.ListView.DropDown" parent="@android:style/Widget.Holo.ListView.DropDown">
+    </style>
+    <style name="Widget.Sherlock.Light.ListView.DropDown" parent="@android:style/Widget.Holo.Light.ListView.DropDown">
+    </style>
+    <style name="Widget.Sherlock.PopupWindow.ActionMode" parent="@android:style/Widget.Holo.PopupWindow">
+    </style>
+    <style name="Widget.Sherlock.Light.PopupWindow.ActionMode" parent="@android:style/Widget.Holo.Light.PopupWindow">
+    </style>
+    <style name="Widget.Sherlock.ProgressBar" parent="@android:style/Widget.Holo.ProgressBar">
+    </style>
+    <style name="Widget.Sherlock.Light.ProgressBar" parent="@android:style/Widget.Holo.Light.ProgressBar">
+    </style>
+    <style name="Widget.Sherlock.ProgressBar.Horizontal" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+    </style>
+    <style name="Widget.Sherlock.Light.ProgressBar.Horizontal" parent="@android:style/Widget.Holo.Light.ProgressBar.Horizontal">
+    </style>
+    <style name="Widget.Sherlock.SearchAutoCompleteTextView" parent="@android:style/Widget.Holo.AutoCompleteTextView">
+    </style>
+    <style name="Widget.Sherlock.Light.SearchAutoCompleteTextView" parent="@android:style/Widget.Holo.Light.AutoCompleteTextView">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Menu" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Menu">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionBar.Subtitle.Inverse" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Subtitle.Inverse">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Title" parent="@android:style/TextAppearance.Holo.Widget.ActionMode.Title">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Title.Inverse" parent="@android:style/TextAppearance.Holo.Widget.ActionMode.Title.Inverse">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Subtitle" parent="@android:style/TextAppearance.Holo.Widget.ActionMode.Subtitle">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.ActionMode.Subtitle.Inverse" parent="@android:style/TextAppearance.Holo.Widget.ActionMode.Subtitle.Inverse">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu.Large" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Large">
+    </style>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Large" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Large">
+    </style>
+    <style name="TextAppearance.Sherlock.Widget.PopupMenu.Small" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Small">
+    </style>
+    <style name="TextAppearance.Sherlock.Light.Widget.PopupMenu.Small" parent="@android:style/TextAppearance.Holo.Widget.PopupMenu.Small">
+    </style>
+    <style name="Sherlock.__Theme" parent="@android:style/Theme.Holo">
+    </style>
+    <style name="Sherlock.__Theme.Light" parent="@android:style/Theme.Holo.Light">
+    </style>
+    <style name="Sherlock.__Theme.DarkActionBar" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        <item name="android:actionBarWidgetTheme">@style/Theme.Sherlock</item>
+        <item name="actionBarSize">?android:attr/actionBarSize</item>
+        <item name="selectableItemBackground">?android:attr/selectableItemBackground</item>
+        <item name="dropDownListViewStyle">?android:attr/dropDownListViewStyle</item>
+        <item name="dropdownListPreferredItemHeight">48dp</item>
+    </style>
+    <style name="Theme.Sherlock.NoActionBar" parent="@style/Theme.Sherlock">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+    <style name="Theme.Sherlock.Light.NoActionBar" parent="@style/Theme.Sherlock.Light">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+    <style name="Theme.Sherlock.Dialog" parent="@android:style/Theme.Holo.Dialog">
+    </style>
+    <style name="Theme.Sherlock.Light.Dialog" parent="@android:style/Theme.Holo.Light.Dialog">
+    </style>
+    <style name="Theme.Thuuz" parent="@style/Theme.Sherlock">
+        <item name="android:buttonStyle">@style/ThuuzButton</item>
+        <item name="android:buttonStyleSmall">@style/ThuuzButtonSmall</item>
+        <item name="android:windowBackground">@color/guide_bg</item>
+        <item name="android:panelFullBackground">@color/gray</item>
+        <item name="android:expandableListViewStyle">@style/ThuuzExpandableListView</item>
+        <item name="android:listViewStyle">@style/ThuuzListView</item>
+        <item name="android:spinnerStyle">@style/ThuuzSpinnerStyle</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:actionBarStyle">@style/Thuuz.ActionBar</item>
+        <item name="android:dropDownSpinnerStyle">@style/ThuuzSpinnerStyle</item>
+        <item name="android:actionBarSize">@dimen/action_bar_size</item>
+        <item name="android:actionBarTabTextStyle">@style/Thuuz.ActionBar.TabText</item>
+        <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
+        <item name="vpiTabPageIndicatorStyle">@style/ThuuzTabPageIndicator</item>
+        <item name="actionBarTabTextStyle">@style/Thuuz.ActionBar.TabText</item>
+        <item name="actionBarStyle">@style/Thuuz.ActionBar</item>
+        <item name="actionBarSize">@dimen/action_bar_size</item>
+    </style>
+    <style name="Theme.Thuuz.Transparent" parent="@style/Theme.Sherlock.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:listViewStyle">@style/ThuuzListView</item>
+        <item name="android:windowAnimationStyle">@style/SlideUpDownAnimation</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+    <style name="Theme.Thuuz.DialogSherlock" parent="@style/Theme.Sherlock.Dialog">
+        <item name="android:buttonStyle">@style/ThuuzButton</item>
+        <item name="android:buttonStyleSmall">@style/ThuuzButtonSmall</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:expandableListViewStyle">@style/ThuuzExpandableListView</item>
+        <item name="android:listViewStyle">@style/ThuuzListView</item>
+        <item name="android:spinnerStyle">@style/ThuuzSpinnerStyle</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:actionBarStyle">@style/Thuuz.ActionBar</item>
+        <item name="android:dropDownSpinnerStyle">@style/ThuuzSpinnerStyle</item>
+        <item name="switchStyle">@style/Widget.Holo.CompoundButton.Switch</item>
+        <item name="vpiTabPageIndicatorStyle">@style/ThuuzTabPageIndicator</item>
+        <item name="actionBarStyle">@style/Thuuz.ActionBar</item>
+    </style>
+    <style name="ThuuzExpandableListView" parent="@android:style/Widget.ExpandableListView">
+        <item name="android:textColor">@color/abs__primary_text_holo_dark</item>
+        <item name="android:background">@color/game_cell_bg</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:listSelector">@drawable/list_selector</item>
+        <item name="android:cacheColorHint">@color/game_cell_bg</item>
+        <item name="android:childDivider">@android:color/black</item>
+        <item name="android:divider">@android:color/black</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:overScrollFooter">@null</item>
+    </style>
+    <style name="ThuuzListView" parent="@android:style/Widget.ListView">
+        <item name="android:background">@color/game_cell_bg</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:listSelector">@drawable/list_selector</item>
+        <item name="android:cacheColorHint">@color/game_cell_bg</item>
+        <item name="android:divider">@color/guide_bg</item>
+        <item name="android:dividerHeight">3dp</item>
+        <item name="android:overScrollFooter">@null</item>
+    </style>
+    <style name="Thuuz.ActionBar" parent="@style/Widget.Sherlock.ActionBar">
+        <item name="android:background">@drawable/action_bar_gradient</item>
+        <item name="android:displayOptions">showCustom</item>
+        <item name="android:customNavigationLayout">@layout/action_bar_layout</item>
+        <item name="android:backgroundStacked">@color/dark_2_gray</item>
+        <item name="android:backgroundSplit">@drawable/action_bar_gradient_reverse</item>
+        <item name="background">@drawable/action_bar_gradient</item>
+        <item name="backgroundSplit">@drawable/action_bar_gradient_reverse</item>
+        <item name="displayOptions">showCustom</item>
+        <item name="backgroundStacked">@drawable/dk_gray_trans</item>
+        <item name="customNavigationLayout">@layout/action_bar_layout</item>
+    </style>
+    <style name="ThuuzSpinnerStyle" parent="@android:style/Widget.Holo.Spinner">
+    </style>
+</resources>

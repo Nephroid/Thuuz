@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/fantasy_teams_layout"
+    android:padding="@dimen/game_page_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/none_found"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:text="No Teams Found. Import teams via plus (+)"
+        style="@style/ColumnHeaderText"/>
+    <RelativeLayout
+        android:background="@color/list_header_bg"
+        android:paddingBottom="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/none_found">
+        <com.thuuz.gtv.util.ProtectedListView
+            android:id="@+id/list"
+            android:descendantFocusability="afterDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:footerDividersEnabled="true"
+            style="@style/ListViewWithHeader">
+            <requestFocus/>
+        </com.thuuz.gtv.util.ProtectedListView>
+    </RelativeLayout>
+</RelativeLayout>

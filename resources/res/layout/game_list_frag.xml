@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/sidebar_bg"
+    android:padding="@dimen/game_page_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.thuuz.roboto.RobotoTextView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/live_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/game_page_margin"
+        android:text="My Sports - Live"
+        style="@style/RightSidebarTitle"/>
+    <com.thuuz.gtv.util.ProtectedListView
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/list"
+        android:background="@color/sidebar_bg"
+        android:descendantFocusability="afterDescendants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:listSelector="@null"
+        android:cacheColorHint="@color/sidebar_bg"
+        android:divider="@color/sidebar_bg"
+        android:dividerHeight="8dp"
+        android:choiceMode="singleChoice"
+        android:overScrollFooter="@color/sidebar_bg"
+        style="@style/ThuuzListView"/>
+    <com.thuuz.roboto.RobotoTextView
+        android:textSize="16sp"
+        android:textColor="@color/white_ff"
+        android:layout_gravity="center"
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading..."
+        custom:typeface="serif"/>
+</LinearLayout>

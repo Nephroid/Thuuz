@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.thuuz.gtv.view.UpDownFocusingExpandableListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="start"
+    android:id="@+id/sliding_list"
+    android:nextFocusLeft="@integer/max_int_no_nav"
+    android:nextFocusRight="@integer/max_int_no_nav"
+    android:nextFocusDown="@integer/max_int_no_nav"
+    android:layout_width="@dimen/sliding_width"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"/>

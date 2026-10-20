@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:id="@+id/dummy_progress_layout"
+    android:background="@drawable/t_button_selector"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:minWidth="204dp"
+    android:layout_centerInParent="true">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:layout_centerInParent="true">
+        <TextView
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="17dp"/>
+        <ProgressBar
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:id="@+id/progress_spinner"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:indeterminateOnly="true"
+            style="@android:style/Widget.ProgressBar.Small"/>
+    </LinearLayout>
+</RelativeLayout>

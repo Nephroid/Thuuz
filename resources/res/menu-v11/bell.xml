@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@drawable/bell"
+        android:id="@+id/bell_option"
+        android:title="Alert Settings"
+        android:showAsAction="ifRoom"/>
+</menu>

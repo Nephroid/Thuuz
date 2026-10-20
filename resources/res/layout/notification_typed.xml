@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@drawable/selector_notif_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/thuuz_logo"
+            android:layout_width="50dp"
+            android:layout_height="17dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/thuuz_logo_gtv"
+            android:minWidth="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="logo"/>
+        <TextView
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:textColor="#f1f1f1"
+            android:ellipsize="end"
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:text=""
+            android:maxLines="3"
+            android:singleLine="false"
+            android:layout_toRightOf="@+id/thuuz_logo"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</RelativeLayout>

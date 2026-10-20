@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.thuuz.gtv.view.PlayThumbnail xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/highlight_thumb"
+    android:background="@drawable/default_video"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scaleType="fitXY"
+    android:minWidth="120dp"
+    android:minHeight="90dp"/>

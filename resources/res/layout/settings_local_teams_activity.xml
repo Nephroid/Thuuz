@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false">
+        <RelativeLayout
+            android:id="@+id/left_side_layout"
+            android:padding="@dimen/game_page_margin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/left_side_percent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/none_found"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/no_local_teams"
+                    style="@style/ColumnHeaderText"/>
+                <com.thuuz.gtv.util.ProtectedListView
+                    android:id="@+id/team_list"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@drawable/list_gray_press_selector">
+                    <requestFocus/>
+                </com.thuuz.gtv.util.ProtectedListView>
+            </LinearLayout>
+        </RelativeLayout>
+        <include
+            android:id="@+id/right_side_layout"
+            layout="@layout/right_side_frame"/>
+    </LinearLayout>
+    <include layout="@layout/sliding_menu"/>
+</android.support.v4.widget.DrawerLayout>

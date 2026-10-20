@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="preference_widget_width">56dp</dimen>
+    <dimen name="default_tab_indicator_text_size">16sp</dimen>
+    <dimen name="abs__dialog_min_width_major">55%</dimen>
+    <dimen name="abs__dialog_min_width_minor">80%</dimen>
+    <dimen name="guide_tabs_text_size">20sp</dimen>
+    <dimen name="col_header_text_size">20sp</dimen>
+    <dimen name="action_bar_size">52dp</dimen>
+    <dimen name="action_bar_text_size">22sp</dimen>
+    <dimen name="team_name_size">17dp</dimen>
+    <dimen name="gec_bubble_size">18dp</dimen>
+    <dimen name="teaser_size">15dp</dimen>
+    <dimen name="gec_circle_side">46dp</dimen>
+    <dimen name="game_cell_top_bar_height">20dp</dimen>
+    <dimen name="game_cell_1d_plot_height">5dp</dimen>
+    <dimen name="game_cell_mid_height">95dp</dimen>
+    <dimen name="game_cell_total_height">124dp</dimen>
+    <dimen name="highlight_thumb_width">60dp</dimen>
+    <dimen name="highlight_thumb_height">45dp</dimen>
+    <dimen name="overlay_top_margin_close">68dp</dimen>
+    <dimen name="overlay_margin_left">20dp</dimen>
+    <dimen name="overlay_margin">20dp</dimen>
+    <dimen name="game_page_margin">10dp</dimen>
+    <dimen name="sliding_width">300dp</dimen>
+    <dimen name="list_header_margin">10dp</dimen>
+</resources>
