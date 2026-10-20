@@ -6,7 +6,6 @@
     package="com.thuuz.mob"
     platformBuildVersionCode="27"
     platformBuildVersionName="8.1.0">
-    <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="27"/>
     <supports-screens
@@ -50,7 +49,7 @@
         android:name="com.thuuz.gtv.App"
         android:allowBackup="true"
         android:hardwareAccelerated="true">
-        <activity
+        <activity android:exported="true"  
             android:theme="@style/Theme.Thuuz.NoDisplay"
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
@@ -64,125 +63,125 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity
+        <activity android:exported="true"  
             android:label="Game"
             android:name="com.thuuz.gtv.activity.game_page.GamePageActivity"
             android:configChanges="keyboardHidden"
             android:uiOptions="splitActionBarWhenNarrow"/>
-        <activity
+        <activity android:exported="true"  
             android:theme="@style/Theme.Thuuz.DialogNoFrag"
             android:name="com.thuuz.gtv.activity.nobar.DialogActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:noHistory="true"/>
-        <activity
+        <activity android:exported="true"  
             android:theme="@style/Theme.Thuuz.DialogSherlock"
             android:label="Check In"
             android:name="com.thuuz.gtv.activity.sports.ShareActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:theme="@style/Theme.Thuuz.DialogSherlock"
             android:name="com.thuuz.gtv.activity.nobar.MessageActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:noHistory="true"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.sports.GuideActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.SplashActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:noHistory="true"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.settings.SettingsActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Favorite Sports"
             android:name="com.thuuz.gtv.settings.SettingsFavSportsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Add Sports &amp; Teams"
             android:name="com.thuuz.gtv.settings.SettingsSportsSelectActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Add Teams"
             android:name="com.thuuz.gtv.settings.SettingsTeamSelectActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:League Detail"
             android:name="com.thuuz.gtv.settings.SettingsLeagueDetailActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Team Detail"
             android:name="com.thuuz.gtv.settings.SettingsTeamDetailActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Alerts"
             android:name="com.thuuz.gtv.settings.SettingsAlertsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:FriendAlerts"
             android:name="com.thuuz.gtv.settings.SettingsFriendAlertsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Locations"
             android:name="com.thuuz.gtv.settings.loc.SettingsLocationsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:TV Info"
             android:name="com.thuuz.gtv.settings.loc.SettingsEditLocationActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Sign in"
             android:name="com.thuuz.gtv.settings.SettingsLoginActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Account"
             android:name="com.thuuz.gtv.settings.SettingsAccountActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Register"
             android:name="com.thuuz.gtv.settings.SettingsRegisterActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:SocialRegister"
             android:name="com.thuuz.gtv.settings.SettingsSocialRegisterActivity"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Account Maintenance"
             android:name="com.thuuz.gtv.settings.SettingsMaintAccountActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Edit Account"
             android:name="com.thuuz.gtv.settings.SettingsEditAccountActivity"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Change Password"
             android:name="com.thuuz.gtv.settings.SettingsChangePassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Change Email"
             android:name="com.thuuz.gtv.settings.SettingsChangeEmailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Alert Sounds"
             android:name="com.thuuz.gtv.settings.SettingsSoundsActivity"
             android:configChanges="orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Settings:Twitter Signin"
             android:name="com.thuuz.gtv.settings.SettingsTwitterOauthActivity"
             android:launchMode="singleTop"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:theme="@style/Theme.Thuuz.NoDisplay"
             android:label="Thuuz Incoming URL"
             android:name="com.thuuz.gtv.activity.nobar.FromCustomUrlActivity"
@@ -196,135 +195,135 @@
                 <data android:scheme="tt"/>
             </intent-filter>
         </activity>
-        <activity
+        <activity android:exported="true"  
             android:label="Feedback"
             android:name="com.thuuz.gtv.settings.FeedbackActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.friends.FriendsActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.friends.AddFbFriendsActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuzer"
             android:name="com.thuuz.gtv.activity.friends.UserProfileActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Search"
             android:name="com.thuuz.gtv.activity.friends.SearchFriendsActivity"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Standings"
             android:name="com.thuuz.gtv.activity.sports.StandingsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Video"
             android:name="com.thuuz.gtv.activity.nobar.MP4VideoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.FeedActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Sites"
             android:name="com.thuuz.gtv.activity.fantasy.FantasySiteSelectActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Teams"
             android:name="com.thuuz.gtv.activity.fantasy.SettingsFantasyTeamsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Import"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyImportSiteActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Competitions"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyCompetitionsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Team Settings"
             android:name="com.thuuz.gtv.activity.fantasy.SettingsFantasyTeamDetailActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz Sports"
             android:icon="@drawable/launcher_icon"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyTeamActivity"
             android:launchMode="singleTask"
             android:configChanges="keyboardHidden"
             android:uiOptions="splitActionBarWhenNarrow"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Learn More"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyLearnMoreActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Fantasy Invite"
             android:name="com.thuuz.gtv.activity.fantasy.FantasyInviteActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Expert Thuuzers"
             android:name="com.thuuz.gtv.activity.friends.ExpertsActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Player Summary"
             android:name="com.thuuz.gtv.activity.fantasy.PlayerActivity"
             android:configChanges="keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Web"
             android:name="com.thuuz.gtv.activity.friends.WebviewActivity"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Local Teams"
             android:name="com.thuuz.gtv.settings.SettingsLocalTeamsActivity"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Facebook Login"
             android:name="com.facebook.LoginActivity"
             android:windowSoftInputMode="stateHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage1Activity"
             android:configChanges="screenSize|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage2Activity"
             android:configChanges="screenSize|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage3Activity"
             android:configChanges="screenSize|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage3aLocationActivity"
             android:configChanges="screenSize|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage4TvActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage6TeamsActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage7LeaguesActivity"
             android:configChanges="screenSize|orientation|keyboardHidden"/>
-        <activity
+        <activity android:exported="true"  
             android:label="Thuuz"
             android:name="com.thuuz.gtv.activity.nobar.OnboardPage8Activity"
             android:configChanges="screenSize|keyboardHidden"/>
@@ -338,7 +337,7 @@
         <service
             android:name="com.thuuz.gtv.widget.WidgetRemoteViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS"/>
-        <receiver
+        <receiver android:exported="true"  
             android:name="com.thuuz.gtv.util.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -347,9 +346,9 @@
                 <category android:name="com.thuuz.mob"/>
             </intent-filter>
         </receiver>
-        <receiver
+        <receiver android:exported="true"  
             android:name="com.appsflyer.AppsFlyerLib"
-            android:exported="true">
+            >
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
@@ -357,7 +356,7 @@
         <service
             android:name="com.thuuz.gtv.widget.ScreenOnService"
             android:exported="false"/>
-        <receiver
+        <receiver android:exported="true"  
             android:name="com.thuuz.gtv.widget.WidgetProvider"
             android:enabled="@bool/sdk12orAbove">
             <intent-filter>
