@@ -660,16 +660,14 @@ public class GameData extends bpq implements Comparable<GameData> {
     }
 
     public GAME_RATING e(int i) {
-        if (i >= 85) {
-            return GAME_RATING.RATING_GREAT;
+        com.thuuz.gtv.game.GameRating rating = new com.thuuz.gtv.game.GameExcitementCalculator().getGameRating(i);
+        switch (rating) {
+            case GREAT: return GAME_RATING.RATING_GREAT;
+            case GOOD: return GAME_RATING.RATING_GOOD;
+            case OK: return GAME_RATING.RATING_OK;
+            case DUD:
+            default: return GAME_RATING.RATING_DUD;
         }
-        if (i >= 65) {
-            return GAME_RATING.RATING_GOOD;
-        }
-        if (i >= 40) {
-            return GAME_RATING.RATING_OK;
-        }
-        return GAME_RATING.RATING_DUD;
     }
 
     public int b(Set<Integer> set) {
@@ -826,29 +824,27 @@ public class GameData extends bpq implements Comparable<GameData> {
     }
 
     public int e(Set<Integer> set) {
-        Integer num = 0;
         try {
-            if (ak()) {
-                num = Integer.valueOf(r(set));
-            } else if (l("gex")) {
-                num = Integer.valueOf(this.b.getInt("gex"));
-                if (a(set)) {
-                    Integer z = z();
-                    Integer y = y();
-                    boolean c = c(set);
-                    if (c && d(set)) {
-                        num = Integer.valueOf(Math.max(z.intValue(), y.intValue()) + num.intValue());
-                    } else if (c) {
-                        num = Integer.valueOf(z.intValue() + num.intValue());
-                    } else {
-                        num = Integer.valueOf(num.intValue() + y.intValue());
-                    }
-                }
-            }
+            boolean isFanOfHomeTeam = c(set);
+            boolean isFanOfAwayTeam = d(set);
+            int gexPredict = ar().has("gex_predict") ? ar().getInt("gex_predict") : 0;
+            int gex = l("gex") ? this.b.getInt("gex") : 0;
+            
+            return new com.thuuz.gtv.game.GameExcitementCalculator().calculateGameExcitement(
+                ak(),
+                ar().has("gex_predict"),
+                gexPredict,
+                l("gex"),
+                gex,
+                isFanOfHomeTeam,
+                isFanOfAwayTeam,
+                l("gex_home_fan_adjust") && !k("gex_home_fan_adjust") ? f("gex_home_fan_adjust") : 0,
+                l("gex_away_fan_adjust") ? f("gex_away_fan_adjust") : 0
+            );
         } catch (Throwable th) {
-            getLogger().log(Level.SEVERE, "getGec() cannot handle: ", th);
+            getLogger().log(java.util.logging.Level.SEVERE, "getGec() cannot handle: ", th);
+            return 0;
         }
-        return Math.min(num.intValue(), 100);
     }
 
     public String f(Set<Integer> set) {
@@ -1917,16 +1913,24 @@ public class GameData extends bpq implements Comparable<GameData> {
 
     public int r(Set<Integer> set) {
         try {
-            if (!ar().has("gex_predict")) {
-                return 0;
-            }
-            int i = ar().getInt("gex_predict");
-            if (a(set)) {
-                return Math.max(i + 10, (i / 10) + 55);
-            }
-            return i;
+            boolean isFanOfHomeTeam = c(set);
+            boolean isFanOfAwayTeam = d(set);
+            int gexPredict = ar().has("gex_predict") ? ar().getInt("gex_predict") : 0;
+            
+            // Reusing calculateGameExcitement by isolating the predict part (treating as upcoming)
+            return new com.thuuz.gtv.game.GameExcitementCalculator().calculateGameExcitement(
+                true,
+                ar().has("gex_predict"),
+                gexPredict,
+                false,
+                0,
+                isFanOfHomeTeam,
+                isFanOfAwayTeam,
+                0,
+                0
+            );
         } catch (Throwable th) {
-            getLogger().log(Level.SEVERE, "problem: ", th);
+            getLogger().log(java.util.logging.Level.SEVERE, "problem: ", th);
             return 0;
         }
     }
