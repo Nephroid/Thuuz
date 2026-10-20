@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.content.Context;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

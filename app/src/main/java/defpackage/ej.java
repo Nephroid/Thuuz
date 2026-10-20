@@ -3,7 +3,7 @@ package defpackage;
 import android.content.Context;
 import android.text.TextUtils;
 import com.actionbarsherlock.widget.ActivityChooserView;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.google.android.gms.analytics.t;
 import java.util.HashMap;
 import java.util.Map;

@@ -1,7 +1,6 @@
 package twitter4j.internal.org.json;
-
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.reflect.Method;

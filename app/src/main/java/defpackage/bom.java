@@ -3,7 +3,7 @@ package defpackage;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.CheckBox;
-import com.facebook.Response;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.sports.ShareActivity;
 import com.thuuz.gtv.settings.SettingsTwitterOauthActivity;
 import java.util.logging.Level;

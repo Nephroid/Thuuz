@@ -2,7 +2,7 @@ package com.thuuz.gtv.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.facebook.UiLifecycleHelper;
+// [removed legacy tracker import]
 import defpackage.bqg;
 import java.util.logging.Level;
 

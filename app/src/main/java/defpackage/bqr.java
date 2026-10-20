@@ -5,7 +5,7 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import java.util.ArrayList;
 import java.util.Arrays;

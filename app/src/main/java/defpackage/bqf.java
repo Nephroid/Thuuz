@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.Session;
+// [removed legacy tracker import]
 import java.util.logging.Level;
 
 /* JADX INFO: Access modifiers changed from: package-private */

@@ -1,7 +1,7 @@
 package com.thuuz.gtv.data;
 
 import android.net.Uri;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import com.thuuz.gtv.App;
 import defpackage.bpq;

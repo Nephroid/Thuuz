@@ -3,8 +3,8 @@ package defpackage;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;

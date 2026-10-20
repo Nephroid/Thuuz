@@ -2,7 +2,7 @@ package defpackage;
 
 import android.view.View;
 import android.widget.Button;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.friends.SearchFriendsActivity;
 import java.util.logging.Level;
 

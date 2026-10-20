@@ -1,6 +1,5 @@
 package twitter4j.conf;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

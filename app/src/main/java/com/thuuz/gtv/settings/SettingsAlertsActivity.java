@@ -8,7 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.thuuz.gtv.activity.AbstractSettings;
-import com.yozio.android.Constants;
+// [removed legacy tracker import]
 import defpackage.bbq;
 import defpackage.bbr;
 import defpackage.bqv;

@@ -2,7 +2,7 @@ package defpackage;
 
 import android.content.Context;
 import android.text.TextUtils;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import java.io.FileInputStream;

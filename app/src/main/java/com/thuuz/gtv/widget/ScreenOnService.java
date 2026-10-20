@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.ThuuzService;
 import defpackage.bbp;

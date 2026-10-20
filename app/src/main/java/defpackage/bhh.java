@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.os.AsyncTask;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.friends.AddFbFriendsActivity;
 import java.util.logging.Level;
 

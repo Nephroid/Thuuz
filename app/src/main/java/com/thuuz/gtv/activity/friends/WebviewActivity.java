@@ -5,7 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.settings.SettingsActivity;
 import com.thuuz.gtv.util.ThuuzWebViewClient;

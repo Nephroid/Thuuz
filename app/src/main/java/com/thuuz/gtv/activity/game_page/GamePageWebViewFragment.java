@@ -11,7 +11,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.actionbarsherlock.widget.ActivityChooserView;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.activity.game_page.AbstractGamePageFragment;
 import com.thuuz.gtv.util.ThuuzWebViewClient;

@@ -4,7 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import com.facebook.internal.AnalyticsEvents;
+// [removed legacy tracker import]
 import com.google.android.gms.internal.av;
 
 @zy

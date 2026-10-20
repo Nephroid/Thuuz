@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.google.android.gms.internal.av;
 import com.google.android.gms.internal.ay;
 import com.google.android.gms.internal.bj;

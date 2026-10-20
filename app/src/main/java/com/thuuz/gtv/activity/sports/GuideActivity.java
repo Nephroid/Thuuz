@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ActivityChooserView;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.IService;
 import com.thuuz.gtv.activity.AbstractActivity;

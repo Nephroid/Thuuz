@@ -2,7 +2,7 @@ package com.google.android.gms.fitness.request;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.android.gms.fitness.data.DataType;
 import defpackage.jy;

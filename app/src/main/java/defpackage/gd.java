@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Process;
 import android.support.v4.os.EnvironmentCompat;
 import android.text.TextUtils;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.google.android.gms.analytics.r;
 import com.google.android.gms.internal.hb;
 import java.io.ByteArrayOutputStream;

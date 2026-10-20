@@ -24,8 +24,8 @@ import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.Display;
 import android.webkit.WebView;
-import com.facebook.internal.NativeProtocol;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.activity.nobar.AbstractNoActionBarActivity;
 import com.thuuz.gtv.activity.nobar.OnboardPage1Activity;

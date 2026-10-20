@@ -3,12 +3,12 @@ package defpackage;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Base64;
-import com.facebook.FacebookException;
-import com.facebook.Request;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.internal.Utility;
-import com.facebook.widget.WebDialog;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.activity.sports.ShareActivity;

@@ -4,7 +4,7 @@ import android.net.http.Headers;
 import android.os.Parcel;
 import android.support.v4.util.TimeUtils;
 import android.support.v4.widget.ViewDragHelper;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.google.android.gms.internal.ji;
 import com.samsung.android.sdk.richnotification.Utilities;
 import defpackage.ain;

@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import java.util.HashMap;
 import java.util.logging.Level;

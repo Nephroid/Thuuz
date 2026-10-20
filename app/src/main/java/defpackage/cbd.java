@@ -2,7 +2,7 @@ package defpackage;
 
 import android.database.Cursor;
 import android.net.Uri;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.IService;

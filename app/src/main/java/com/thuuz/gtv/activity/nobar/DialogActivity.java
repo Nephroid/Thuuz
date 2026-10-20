@@ -10,7 +10,7 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import defpackage.bbn;
 import defpackage.bbq;
 import defpackage.bbr;

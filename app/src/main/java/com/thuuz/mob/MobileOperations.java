@@ -1,10 +1,10 @@
 package com.thuuz.mob;
 
 import android.content.Context;
-import com.flurry.android.FlurryAgent;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.PlatformOperations;
-import com.yozio.android.Yozio;
+// [removed legacy tracker import]
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;

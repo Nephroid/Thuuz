@@ -1,8 +1,7 @@
 package defpackage;
-
-import com.facebook.Request;
-import com.facebook.RequestAsyncTask;
-import com.facebook.Response;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import java.lang.ref.WeakReference;
 import java.util.List;

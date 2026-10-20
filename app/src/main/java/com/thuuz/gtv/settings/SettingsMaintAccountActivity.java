@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
-import com.facebook.UiLifecycleHelper;
+// [removed legacy tracker import]
 import defpackage.bbq;
 import defpackage.bbr;
 import defpackage.bud;

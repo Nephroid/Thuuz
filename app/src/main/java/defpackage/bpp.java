@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import org.json.JSONObject;
 
 /* loaded from: classes.dex */

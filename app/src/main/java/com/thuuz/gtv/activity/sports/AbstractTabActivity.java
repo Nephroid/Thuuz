@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import defpackage.bbp;
 import defpackage.bbq;

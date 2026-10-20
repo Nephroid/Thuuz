@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import java.util.logging.Level;
 import org.apache.http.message.BasicNameValuePair;

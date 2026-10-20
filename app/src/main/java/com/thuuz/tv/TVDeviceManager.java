@@ -2,8 +2,8 @@ package com.thuuz.tv;
 
 import android.os.Environment;
 import android.os.StatFs;
-import com.facebook.AppEventsConstants;
-import com.flurry.android.Constants;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;

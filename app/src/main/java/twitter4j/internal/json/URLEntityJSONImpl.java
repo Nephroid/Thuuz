@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import twitter4j.TwitterException;
 import twitter4j.URLEntity;
 import twitter4j.internal.org.json.JSONArray;

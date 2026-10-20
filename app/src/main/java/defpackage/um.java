@@ -1,8 +1,7 @@
 package defpackage;
 
 import android.graphics.drawable.Drawable;
-import com.facebook.AppEventsConstants;
-
+// [removed legacy tracker import]
 @zy
 /* loaded from: classes.dex */
 public class um extends us implements uo {

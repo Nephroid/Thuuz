@@ -1,9 +1,8 @@
 package defpackage;
-
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.util.logging.Level;
 
 /* JADX INFO: Access modifiers changed from: package-private */

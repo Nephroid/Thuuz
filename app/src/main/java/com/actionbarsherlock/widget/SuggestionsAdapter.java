@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.actionbarsherlock.R;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;

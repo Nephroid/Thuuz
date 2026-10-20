@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.thuuz.gtv.IService;
 import com.thuuz.gtv.activity.game_page.ButtonData;
 import com.thuuz.gtv.data.GameData;

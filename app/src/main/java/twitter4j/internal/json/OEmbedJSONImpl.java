@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import java.io.Serializable;
 import twitter4j.OEmbed;
 import twitter4j.RateLimitStatus;

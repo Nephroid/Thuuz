@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import com.facebook.Session;
+// [removed legacy tracker import]
 import defpackage.bbq;
 import defpackage.bbr;
 import defpackage.bpw;

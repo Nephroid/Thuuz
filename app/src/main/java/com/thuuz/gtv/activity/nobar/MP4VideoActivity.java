@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.MediaController;
 import android.widget.VideoView;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import defpackage.bbq;
 import defpackage.bbr;
 import defpackage.bbt;

@@ -1,7 +1,6 @@
 package defpackage;
-
-import com.facebook.Session;
-import com.facebook.SessionState;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.friends.AddFriendsFragment;
 import java.util.logging.Logger;
 

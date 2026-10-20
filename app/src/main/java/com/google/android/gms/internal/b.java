@@ -1,7 +1,7 @@
 package com.google.android.gms.internal;
 
 import android.net.http.Headers;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import org.apache.commons.logging.LogFactory;
 import twitter4j.conf.PropertyConfiguration;

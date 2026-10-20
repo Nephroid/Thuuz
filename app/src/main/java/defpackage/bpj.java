@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.model.GraphUser;
+// [removed legacy tracker import]
 import java.util.logging.Level;
 import org.json.JSONObject;
 

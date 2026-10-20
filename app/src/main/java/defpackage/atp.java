@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.google.android.gms.tagmanager.dh;
 import java.util.ArrayList;
 import java.util.HashMap;

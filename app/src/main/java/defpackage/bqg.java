@@ -1,12 +1,12 @@
 package defpackage;
 
 import android.os.AsyncTask;
-import com.facebook.FacebookOperationCanceledException;
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.model.GraphUser;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.activity.AbstractActivity;
 import java.lang.ref.WeakReference;

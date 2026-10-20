@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.content.Context;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

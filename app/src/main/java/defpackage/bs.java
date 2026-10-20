@@ -2,7 +2,7 @@ package defpackage;
 
 import android.content.Context;
 import android.util.Log;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ScheduledExecutorService;
 

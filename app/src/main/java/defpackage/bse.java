@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.widget.CompoundButton;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import com.thuuz.gtv.settings.SettingsAlertsActivity;
 import java.util.HashMap;
 import java.util.logging.Level;

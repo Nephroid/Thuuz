@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import com.actionbarsherlock.view.Menu;
-import com.facebook.FacebookException;
-import com.facebook.FacebookOperationCanceledException;
-import com.facebook.Session;
-import com.facebook.internal.NativeProtocol;
-import com.facebook.widget.WebDialog;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.activity.AbstractFbSettings;
 import defpackage.bbq;

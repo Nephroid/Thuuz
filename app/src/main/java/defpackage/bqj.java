@@ -1,9 +1,8 @@
 package defpackage;
-
-import com.facebook.FacebookRequestError;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.model.GraphUser;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.activity.friends.AddFbFriendsActivity;
 import java.lang.ref.WeakReference;

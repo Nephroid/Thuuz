@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import java.io.Serializable;
 import twitter4j.Trend;

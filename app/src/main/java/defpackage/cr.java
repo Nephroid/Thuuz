@@ -12,7 +12,7 @@ import android.os.Build;
 import android.support.v4.widget.ExploreByTouchHelper;
 import android.util.Log;
 import com.google.android.gcm.GCMBroadcastReceiver;
-import com.yozio.android.Constants;
+// [removed legacy tracker import]
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;

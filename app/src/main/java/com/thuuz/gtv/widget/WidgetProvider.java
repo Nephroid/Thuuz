@@ -12,7 +12,7 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.text.format.DateFormat;
 import android.widget.RemoteViews;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.ThuuzService;
 import com.thuuz.gtv.activity.nobar.InitialActivity;

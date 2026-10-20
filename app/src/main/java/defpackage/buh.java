@@ -1,7 +1,6 @@
 package defpackage;
-
-import com.facebook.FacebookRequestError;
-import com.facebook.model.GraphUser;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.settings.SettingsMaintAccountActivity;
 import java.util.logging.Level;

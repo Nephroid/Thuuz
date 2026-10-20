@@ -1,7 +1,6 @@
 package defpackage;
-
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.google.android.gms.internal.gv;
 import java.util.Map;
 

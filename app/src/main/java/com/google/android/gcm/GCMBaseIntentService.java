@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import defpackage.cr;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

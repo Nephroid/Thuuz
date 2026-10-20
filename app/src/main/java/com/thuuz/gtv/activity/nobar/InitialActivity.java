@@ -3,7 +3,7 @@ package com.thuuz.gtv.activity.nobar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.logging.Level;

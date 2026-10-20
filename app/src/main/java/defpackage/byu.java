@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.text.TextUtils;
-import com.facebook.Response;
+// [removed legacy tracker import]
 import com.google.android.gms.internal.gv;
 import java.util.Map;
 import org.json.JSONException;

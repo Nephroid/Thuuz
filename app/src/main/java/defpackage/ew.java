@@ -1,8 +1,8 @@
 package defpackage;
 
 import android.text.TextUtils;
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.MessageDigest;

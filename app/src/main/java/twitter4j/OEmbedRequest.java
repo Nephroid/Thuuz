@@ -1,6 +1,5 @@
 package twitter4j;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

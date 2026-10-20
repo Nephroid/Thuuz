@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
-
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import java.util.HashMap;
 import java.util.Map;
 import twitter4j.MediaEntity;

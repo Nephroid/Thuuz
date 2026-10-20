@@ -1,7 +1,7 @@
 package defpackage;
 
 import android.os.Build;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.IService;
 import java.io.IOException;

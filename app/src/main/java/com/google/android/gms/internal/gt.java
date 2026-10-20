@@ -1,7 +1,7 @@
 package com.google.android.gms.internal;
 
 import android.os.Parcel;
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import defpackage.ado;
 import defpackage.zy;

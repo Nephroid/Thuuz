@@ -1,6 +1,5 @@
 package org.joda.time.chrono;
-
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import java.util.Locale;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.DurationField;

@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import twitter4j.Place;
 import twitter4j.RateLimitStatus;
 import twitter4j.ResponseList;

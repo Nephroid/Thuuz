@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import java.util.Iterator;
 import java.util.logging.Level;

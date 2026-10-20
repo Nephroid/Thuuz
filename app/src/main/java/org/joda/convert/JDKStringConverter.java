@@ -1,6 +1,5 @@
 package org.joda.convert;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;

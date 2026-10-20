@@ -1,9 +1,9 @@
 package twitter4j;
 
 import android.net.http.Headers;
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.NativeProtocol;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.samsung.android.sdk.richnotification.Utilities;
 import java.io.File;
 import java.io.FileNotFoundException;

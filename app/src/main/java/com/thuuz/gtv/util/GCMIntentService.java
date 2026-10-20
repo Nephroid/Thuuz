@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.PowerManager;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import com.google.android.gcm.GCMBaseIntentService;
 import com.thuuz.gtv.App;
 import com.thuuz.gtv.ThuuzForegroundService;

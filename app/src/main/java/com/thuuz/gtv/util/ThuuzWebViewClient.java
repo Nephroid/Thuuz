@@ -7,8 +7,8 @@ import android.net.http.SslError;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import com.facebook.internal.NativeProtocol;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.activity.friends.WebviewActivity;
 import com.thuuz.gtv.activity.game_page.GamePageActivity;

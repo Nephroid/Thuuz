@@ -2,7 +2,7 @@ package com.thuuz.gtv.data;
 
 import android.content.Context;
 import android.content.Intent;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import com.thuuz.gtv.App;
 import defpackage.bpu;
 import java.util.HashMap;

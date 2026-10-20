@@ -3,8 +3,7 @@ package android.support.v4.hardware.display;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.view.Display;
-import com.facebook.internal.ServerProtocol;
-
+// [removed legacy tracker import]
 /* loaded from: classes.dex */
 final class DisplayManagerJellybeanMr1 {
     DisplayManagerJellybeanMr1() {

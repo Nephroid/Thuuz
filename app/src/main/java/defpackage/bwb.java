@@ -3,8 +3,8 @@ package defpackage;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import com.appsflyer.AppsFlyerLib;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import com.thuuz.gtv.settings.SettingsTwitterOauthActivity;
 import java.util.HashMap;

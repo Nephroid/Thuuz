@@ -1,8 +1,7 @@
 package defpackage;
-
-import com.facebook.AppEventsConstants;
-import com.facebook.internal.NativeProtocol;
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
+// [removed legacy tracker import]
+// [removed legacy tracker import]
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import com.facebook.UiLifecycleHelper;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import defpackage.bbf;
 import defpackage.bbq;

@@ -1,6 +1,5 @@
 package defpackage;
-
-import com.facebook.internal.ServerProtocol;
+// [removed legacy tracker import]
 import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;

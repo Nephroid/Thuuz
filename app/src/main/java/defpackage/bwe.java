@@ -3,7 +3,7 @@ package defpackage;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Button;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import com.thuuz.gtv.IService;
 import com.thuuz.gtv.activity.friends.WebviewActivity;
 import com.thuuz.gtv.activity.sports.ShareActivity;

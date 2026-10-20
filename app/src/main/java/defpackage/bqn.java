@@ -2,7 +2,7 @@ package defpackage;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import com.thuuz.gtv.activity.AbstractActivity;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

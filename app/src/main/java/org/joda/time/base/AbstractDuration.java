@@ -1,6 +1,5 @@
 package org.joda.time.base;
-
-import com.facebook.AppEventsConstants;
+// [removed legacy tracker import]
 import org.joda.convert.ToString;
 import org.joda.time.Duration;
 import org.joda.time.Period;

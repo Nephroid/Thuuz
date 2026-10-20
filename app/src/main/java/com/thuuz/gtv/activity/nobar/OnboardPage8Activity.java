@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.MotionEventCompat;
 import android.view.View;
 import android.widget.TextView;
-import com.appsflyer.AppsFlyerLib;
+// [removed legacy tracker import]
 import defpackage.bbp;
 import defpackage.bbq;
 import defpackage.bbr;

@@ -2,7 +2,7 @@ package defpackage;
 
 import android.content.Context;
 import android.net.Uri;
-import com.facebook.internal.NativeProtocol;
+// [removed legacy tracker import]
 import java.util.Map;
 
 /* loaded from: classes.dex */
