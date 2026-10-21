@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_game_item_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp"
+    android:background="#222222"
+    android:layout_marginBottom="4dp">
+
+    <!-- Teams and Status Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/widget_game_teams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BOS @ DET"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/widget_game_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Q4 0:45"
+            android:textColor="#FF5252"
+            android:textSize="11sp"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <!-- Score Column -->
+    <TextView
+        android:id="@+id/widget_game_scores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="113 - 121"
+        android:textColor="#EEEEEE"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:singleLine="true" />
+
+    <!-- GEX Excitement Rating Badge -->
+    <TextView
+        android:id="@+id/widget_game_gex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2E7D32"
+        android:text="95 GREAT"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:gravity="center" />
+
+</LinearLayout>

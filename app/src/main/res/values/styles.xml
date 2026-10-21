@@ -671,7 +671,7 @@
     </style>
     <style name="ThuuzTabPageIndicator" parent="@style/Widget.TabPageIndicator">
         <item name="android:textColor">@color/white_ff</item>
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="SlideUpDownAnimation" parent="">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
@@ -778,11 +778,11 @@
     </style>
     <style name="TextAppearance.Widget.Title" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/white_f1</item>
-        <item name="typeface">normal</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="Thuuz.ActionBar.TabText" parent="@style/Widget.Sherlock.ActionBar.TabText">
         <item name="android:textSize">15sp</item>
-        <item name="typeface">normal</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="Thuuz.Normal.TabText" parent="@style/Thuuz.ActionBar.TabText">
         <item name="android:textSize">12sp</item>
@@ -826,12 +826,12 @@
     <style name="ColumnHeaderText" parent="">
         <item name="android:textSize">@dimen/guide_tabs_text_size</item>
         <item name="android:textColor">@color/white_ff</item>
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="RightSidebarTitle" parent="">
         <item name="android:textSize">26sp</item>
         <item name="android:textColor">@color/white_f1</item>
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="text_18_bold_f1" parent="">
         <item name="android:textSize">18sp</item>
@@ -925,7 +925,7 @@
     <style name="ColumnEarlierLaterText" parent="">
         <item name="android:textSize">@dimen/guide_tabs_text_size</item>
         <item name="android:textColor">@color/white_ff</item>
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="BlueBgText" parent="">
         <item name="android:textSize">18sp</item>
@@ -959,13 +959,13 @@
         <item name="android:minHeight">@dimen/list_sep_height</item>
     </style>
     <style name="ListSeparatorTitle" parent="@style/ListSeparator">
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="ListSeparatorSubtitle" parent="@style/ListSeparatorTitle">
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:minHeight">12dp</item>
-        <item name="typeface">serif</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="TennisScore" parent="">
         <item name="android:textSize">14sp</item>
@@ -983,7 +983,7 @@
         <item name="android:textColor">@color/winning_team_text</item>
     </style>
     <style name="GolfTitle" parent="@style/ColumnHeaderText">
-        <item name="typeface">4</item>
+        <item name="typeface">roboto_regular</item>
     </style>
     <style name="ThuuzSpinnerStyle" parent="@android:style/Widget.Spinner">
         <item name="android:background">@drawable/thuuz_spinner_selector</item>

@@ -31,16 +31,35 @@ android {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
   }
+
   buildFeatures {
     compose = true
     buildConfig = true
   }
+
+  testOptions {
+    unitTests.isReturnDefaultValues = true
+  }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+  exclude("com/actionbarsherlock/**")
+  exclude("android/support/**")
+  exclude("com/google/**")
+  exclude("com/samsung/**")
+  exclude("com/viewpagerindicator/**")
+  exclude("org/joda/**")
+  exclude("org/apache/**")
+  exclude("twitter4j/**")
+  exclude("com/thuuz/gtv/activity/**")
+  exclude("com/thuuz/gtv/settings/**")
 }
 
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.material3)
+  implementation("androidx.compose.material:material-icons-extended")
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.tooling.preview)
@@ -54,5 +73,7 @@ dependencies {
   implementation(libs.converter.moshi)
   implementation(libs.moshi.kotlin)
   implementation(libs.kotlinx.coroutines.android)
+  implementation("androidx.work:work-runtime-ktx:2.9.1")
   testImplementation(libs.junit)
+  testImplementation("org.json:json:20240303")
 }

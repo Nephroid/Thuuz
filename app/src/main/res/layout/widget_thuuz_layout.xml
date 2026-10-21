@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#181818"
+    android:padding="10dp">
+
+    <!-- Top Brand Bar: Thuuz Sports - Live Excitement + Refresh Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/widget_brand_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/launcher_icon"
+            android:contentDescription="Thuuz Sports" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thuuz Sports"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="  —  Live Excitement"
+                android:textColor="#2E7D32"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/widget_refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="↻ Refresh"
+            android:textColor="#81C784"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="#222222" />
+    </LinearLayout>
+
+    <!-- Games Container for top 3 highest GEX games -->
+    <LinearLayout
+        android:id="@+id/widget_games_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <!-- Fallback empty view -->
+    <TextView
+        android:id="@+id/widget_empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading thrillers... Tap to launch Thuuz."
+        android:textColor="#AAAAAA"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="gone" />
+
+</LinearLayout>
