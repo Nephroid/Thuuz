@@ -29,6 +29,8 @@ import com.thuuz.mob.data.FavoritesManager
 import com.thuuz.mob.data.LiveSportsDataRepository
 import com.thuuz.mob.data.SettingsManager
 import com.thuuz.mob.ui.compose.*
+import com.thuuz.mob.ui.theme.ThemeMode
+import com.thuuz.mob.ui.theme.ThuuzTheme
 import com.thuuz.mob.worker.ThrillerNotificationWorker
 import java.text.SimpleDateFormat
 import java.util.*
@@ -70,7 +72,14 @@ class MainActivity : ComponentActivity() {
         processIntent(intent)
 
         setContent {
-            MaterialTheme {
+            val currentThemeModeStr = remember { mutableStateOf(settingsManager.getThemeMode()) }
+            val themeMode = when (currentThemeModeStr.value.uppercase()) {
+                "DARK" -> ThemeMode.DARK
+                "LIGHT" -> ThemeMode.LIGHT
+                else -> ThemeMode.SYSTEM
+            }
+
+            ThuuzTheme(themeMode = themeMode) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

@@ -11,13 +11,19 @@ import android.view.View
 import android.widget.RemoteViews
 import com.thuuz.mob.MainActivity
 import com.thuuz.mob.R
+import com.thuuz.mob.data.FavoritesManager
 import com.thuuz.mob.data.LiveSportsDataRepository
 import com.thuuz.mob.data.SettingsManager
 import com.thuuz.mob.ui.compose.Game
+import com.thuuz.mob.ui.compose.SportLeague
 import com.thuuz.mob.ui.compose.Team
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 
 class ThuuzWidgetProvider : AppWidgetProvider() {
 
@@ -58,12 +64,34 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
 
     fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
-            val repository = LiveSportsDataRepository()
+            val favoritesManager = FavoritesManager.getInstance(context)
+            val repository = LiveSportsDataRepository(favoritesManager)
             val settingsManager = SettingsManager.getInstance(context)
             val isNoSpoilers = settingsManager.isNoSpoilersEnabled()
 
-            var games = try {
-                repository.fetchLiveGamesSync()
+            val leagues = listOf(
+                SportLeague.NBA,
+                SportLeague.NHL,
+                SportLeague.NFL,
+                SportLeague.MLB,
+                SportLeague.NCAAF,
+                SportLeague.NCAAM,
+                SportLeague.SOCCER
+            )
+
+            var games: List<Game> = try {
+                withTimeoutOrNull(10000L) {
+                    val deferredList: List<Deferred<List<Game>>> = leagues.map { league ->
+                        async(Dispatchers.IO) {
+                            try {
+                                repository.fetchGamesSync(league, null)
+                            } catch (e: Exception) {
+                                emptyList()
+                            }
+                        }
+                    }
+                    deferredList.awaitAll().flatten()
+                } ?: emptyList()
             } catch (e: Exception) {
                 emptyList()
             }

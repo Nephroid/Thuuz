@@ -14,6 +14,7 @@ class SettingsManager(context: Context) {
         const val KEY_NO_SPOILERS = "key_no_spoilers"
         const val KEY_EXCITEMENT_ALERT_THRESHOLD = "key_excitement_alert_threshold"
         const val KEY_MY_TEAMS_ONLY_ALERTS = "key_my_teams_only_alerts"
+        const val KEY_THEME_MODE = "key_theme_mode"
 
         const val DEFAULT_THRESHOLD = 85
         const val MIN_THRESHOLD = 70
@@ -53,6 +54,14 @@ class SettingsManager(context: Context) {
 
     fun setMyTeamsOnlyAlerts(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_MY_TEAMS_ONLY_ALERTS, enabled).apply()
+    }
+
+    fun getThemeMode(): String {
+        return prefs.getString(KEY_THEME_MODE, "SYSTEM") ?: "SYSTEM"
+    }
+
+    fun setThemeMode(mode: String) {
+        prefs.edit().putString(KEY_THEME_MODE, mode).apply()
     }
 
     fun isScoreRevealed(gameId: String): Boolean {

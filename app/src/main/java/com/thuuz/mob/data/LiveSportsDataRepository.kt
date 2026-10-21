@@ -20,11 +20,10 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.util.Locale
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 import kotlin.math.abs
 
@@ -35,6 +34,14 @@ class LiveSportsDataRepository(
 
     companion object {
         private const val BASE_ESPN_API = "https://site.api.espn.com/apis/site/v2/sports"
+
+        val sharedOkHttpClient: OkHttpClient by lazy {
+            OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build()
+        }
     }
 
     interface FetchCallback {
@@ -89,6 +96,20 @@ class LiveSportsDataRepository(
                 callback.onError(e)
             }
         }
+    }
+
+    fun fetchGamesSync(league: SportLeague, dateStr: String? = null): List<Game> {
+        val games = mutableListOf<Game>()
+        try {
+            val endpoint = buildScoreboardUrl(league, dateStr)
+            val json = makeHttpRequest(endpoint)
+            if (json.isNotEmpty()) {
+                games.addAll(parseGames(json, league))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return games
     }
 
     fun fetchLiveGamesSync(): List<Game> {
@@ -188,27 +209,20 @@ class LiveSportsDataRepository(
     }
 
     private fun makeHttpRequest(urlString: String): String {
-        var connection: HttpURLConnection? = null
         try {
-            val url = URL(urlString)
-            connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connectTimeout = 8000
-            connection.readTimeout = 8000
-            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-                val reader = BufferedReader(InputStreamReader(connection.inputStream))
-                val response = StringBuilder()
-                var line: String?
-                while (reader.readLine().also { line = it } != null) {
-                    response.append(line)
+            val request = Request.Builder()
+                .url(urlString)
+                .header("User-Agent", "Mozilla/5.0 (Linux; Android 14; Pixel 10 Pro Fold) AppleWebKit/537.36")
+                .header("Accept", "application/json")
+                .build()
+
+            sharedOkHttpClient.newCall(request).execute().use { response ->
+                if (response.isSuccessful) {
+                    return response.body?.string() ?: ""
                 }
-                reader.close()
-                return response.toString()
             }
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            connection?.disconnect()
         }
         return ""
     }

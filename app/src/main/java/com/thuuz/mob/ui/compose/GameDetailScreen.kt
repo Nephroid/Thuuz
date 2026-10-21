@@ -127,7 +127,10 @@ fun GameDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    plays = detail.plays
+                    plays = detail.plays,
+                    isNoSpoilers = isNoSpoilers,
+                    isScoreRevealed = isScoreRevealed,
+                    onRevealScore = onRevealScore
                 )
 
                 // Secondary Tab Navigation (Summary, Highlights, Plays, Box Score)
@@ -158,8 +161,20 @@ fun GameDetailScreen(
                 when (selectedTabIndex) {
                     0 -> SummaryAndWatchTab(detail)
                     1 -> VideoHighlightsTab(detail.videos)
-                    2 -> ScoringPlaysTab(detail.plays)
-                    3 -> BoxScoreAndLeadersTab(detail.teamBoxStats, detail.leaders, detail.playerBoxScores)
+                    2 -> ScoringPlaysTab(
+                        plays = detail.plays,
+                        isNoSpoilers = isNoSpoilers,
+                        isScoreRevealed = isScoreRevealed,
+                        onRevealScore = onRevealScore
+                    )
+                    3 -> BoxScoreAndLeadersTab(
+                        boxStats = detail.teamBoxStats,
+                        leaders = detail.leaders,
+                        playerBoxScores = detail.playerBoxScores,
+                        isNoSpoilers = isNoSpoilers,
+                        isScoreRevealed = isScoreRevealed,
+                        onRevealScore = onRevealScore
+                    )
                 }
             }
         }
@@ -382,9 +397,13 @@ fun MomentumExcitementCurve(
     homeTeamName: String,
     awayTeamName: String,
     modifier: Modifier = Modifier,
-    plays: List<PlayItem> = emptyList()
+    plays: List<PlayItem> = emptyList(),
+    isNoSpoilers: Boolean = false,
+    isScoreRevealed: Boolean = false,
+    onRevealScore: () -> Unit = {}
 ) {
     var scrubbedIndex by remember { mutableStateOf<Int?>(null) }
+    val isHiddenSpoiler = isNoSpoilers && !isScoreRevealed
 
     Card(
         modifier = modifier,
@@ -402,108 +421,202 @@ fun MomentumExcitementCurve(
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
-                Text(
-                    text = if (scrubbedIndex != null) "Scrubbing momentum" else "50% baseline (drag to scrub)",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (scrubbedIndex != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontWeight = if (scrubbedIndex != null) FontWeight.Bold else FontWeight.Normal
-                )
+                if (isHiddenSpoiler) {
+                    Surface(
+                        shape = RoundedCornerShape(6.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer,
+                        modifier = Modifier.clickable(onClick = onRevealScore)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Visibility,
+                                contentDescription = "Reveal",
+                                modifier = Modifier.size(14.dp),
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                text = "Reveal Graph",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                    }
+                } else {
+                    Text(
+                        text = if (scrubbedIndex != null) "Tap outside to reset" else "50% baseline (drag to scrub)",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (scrubbedIndex != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontWeight = if (scrubbedIndex != null) FontWeight.Bold else FontWeight.Normal
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            // Canvas Chart for Probability Swing with Touch/Drag Scrubbing
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(110.dp)
-                    .pointerInput(winProbabilities) {
-                        awaitEachGesture {
-                            val down = awaitFirstDown(requireUnconsumed = false)
-                            if (winProbabilities.isNotEmpty()) {
-                                val ratio = (down.position.x / size.width.toFloat()).coerceIn(0f, 1f)
-                                val idx = (ratio * (winProbabilities.size - 1)).toInt().coerceIn(0, winProbabilities.size - 1)
-                                scrubbedIndex = idx
-                            }
-                            do {
-                                val event = awaitPointerEvent()
-                                val current = event.changes.firstOrNull()
-                                if (current != null && current.pressed && winProbabilities.isNotEmpty()) {
-                                    current.consume()
-                                    val ratio = (current.position.x / size.width.toFloat()).coerceIn(0f, 1f)
-                                    val idx = (ratio * (winProbabilities.size - 1)).toInt().coerceIn(0, winProbabilities.size - 1)
-                                    scrubbedIndex = idx
-                                }
-                            } while (event.changes.any { it.pressed })
-                        }
+            if (isHiddenSpoiler) {
+                // Spoiler Masked placeholder for Momentum
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(90.dp)
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), RoundedCornerShape(8.dp))
+                        .clickable(onClick = onRevealScore),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            imageVector = Icons.Default.Visibility,
+                            contentDescription = "Hidden",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Text(
+                            text = "Win probability curve masked to avoid spoilers",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = "Tap here or 'Show' to uncover momentum",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
-            ) {
-                val primaryColor = MaterialTheme.colorScheme.primary
-                val outlineColor = MaterialTheme.colorScheme.outlineVariant
-
-                Canvas(modifier = Modifier.fillMaxSize()) {
-                    val width = size.width
-                    val height = size.height
-
-                    // Center 50% line
-                    val midY = height / 2f
-                    drawLine(
-                        color = outlineColor,
-                        start = Offset(0f, midY),
-                        end = Offset(width, midY),
-                        strokeWidth = 1.5f,
-                        pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
-                    )
-
-                    if (winProbabilities.size >= 2) {
-                        val path = Path()
-                        val stepX = width / (winProbabilities.size - 1)
-
-                        winProbabilities.forEachIndexed { i, pt ->
-                            val x = i * stepX
-                            val y = height - (pt.homeWinPercentage * height)
-
-                            if (i == 0) {
-                                path.moveTo(x, y)
-                            } else {
-                                val prevX = (i - 1) * stepX
-                                val prevY = height - (winProbabilities[i - 1].homeWinPercentage * height)
-                                val cX1 = prevX + (stepX / 2f)
-                                val cX2 = prevX + (stepX / 2f)
-                                path.cubicTo(cX1, prevY, cX2, y, x, y)
+                }
+            } else {
+                // Canvas Chart for Probability Swing with Touch/Drag Scrubbing & Dual-Color Split Gradient
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(110.dp)
+                        .pointerInput(winProbabilities) {
+                            awaitEachGesture {
+                                val down = awaitFirstDown(requireUnconsumed = false)
+                                if (winProbabilities.isNotEmpty()) {
+                                    val ratio = (down.position.x / size.width.toFloat()).coerceIn(0f, 1f)
+                                    val idx = (ratio * (winProbabilities.size - 1)).toInt().coerceIn(0, winProbabilities.size - 1)
+                                    // Toggle off if tapping same scrub index, otherwise set
+                                    scrubbedIndex = if (scrubbedIndex == idx) null else idx
+                                }
+                                do {
+                                    val event = awaitPointerEvent()
+                                    val current = event.changes.firstOrNull()
+                                    if (current != null && current.pressed && winProbabilities.isNotEmpty()) {
+                                        current.consume()
+                                        val ratio = (current.position.x / size.width.toFloat()).coerceIn(0f, 1f)
+                                        val idx = (ratio * (winProbabilities.size - 1)).toInt().coerceIn(0, winProbabilities.size - 1)
+                                        scrubbedIndex = idx
+                                    }
+                                } while (event.changes.any { it.pressed })
                             }
                         }
+                ) {
+                    val primaryColor = MaterialTheme.colorScheme.primary
+                    val secondaryColor = MaterialTheme.colorScheme.secondary
+                    val outlineColor = MaterialTheme.colorScheme.outlineVariant
 
-                        // Draw smooth win probability momentum line
-                        drawPath(
-                            path = path,
-                            color = primaryColor,
-                            style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
+                    Canvas(modifier = Modifier.fillMaxSize()) {
+                        val width = size.width
+                        val height = size.height
+
+                        // Center 50% line
+                        val midY = height / 2f
+                        drawLine(
+                            color = outlineColor,
+                            start = Offset(0f, midY),
+                            end = Offset(width, midY),
+                            strokeWidth = 1.5f,
+                            pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
                         )
 
-                        // Draw scrubbing line and indicator circle
-                        if (scrubbedIndex != null) {
-                            val sIdx = scrubbedIndex!!.coerceIn(0, winProbabilities.size - 1)
-                            val scrubX = sIdx * stepX
-                            val scrubY = height - (winProbabilities[sIdx].homeWinPercentage * height)
-
+                        // Vertical Quarter / Period Divider Guides (25%, 50%, 75%)
+                        for (q in 1..3) {
+                            val qX = width * (q / 4f)
                             drawLine(
-                                color = primaryColor.copy(alpha = 0.8f),
-                                start = Offset(scrubX, 0f),
-                                end = Offset(scrubX, height),
-                                strokeWidth = 2.dp.toPx()
+                                color = outlineColor.copy(alpha = 0.4f),
+                                start = Offset(qX, 0f),
+                                end = Offset(qX, height),
+                                strokeWidth = 1f,
+                                pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(4f, 8f), 0f)
+                            )
+                        }
+
+                        if (winProbabilities.size >= 2) {
+                            val path = Path()
+                            val fillPath = Path()
+                            val stepX = width / (winProbabilities.size - 1)
+
+                            fillPath.moveTo(0f, midY)
+
+                            winProbabilities.forEachIndexed { i, pt ->
+                                val x = i * stepX
+                                val y = height - (pt.homeWinPercentage * height)
+
+                                if (i == 0) {
+                                    path.moveTo(x, y)
+                                    fillPath.lineTo(x, y)
+                                } else {
+                                    val prevX = (i - 1) * stepX
+                                    val prevY = height - (winProbabilities[i - 1].homeWinPercentage * height)
+                                    val cX1 = prevX + (stepX / 2f)
+                                    val cX2 = prevX + (stepX / 2f)
+                                    path.cubicTo(cX1, prevY, cX2, y, x, y)
+                                    fillPath.cubicTo(cX1, prevY, cX2, y, x, y)
+                                }
+                            }
+
+                            fillPath.lineTo(width, midY)
+                            fillPath.close()
+
+                            // Draw shaded area under/over momentum curve
+                            drawPath(
+                                path = fillPath,
+                                brush = Brush.verticalGradient(
+                                    colors = listOf(
+                                        primaryColor.copy(alpha = 0.35f),
+                                        Color.Transparent,
+                                        secondaryColor.copy(alpha = 0.35f)
+                                    )
+                                )
                             )
 
-                            drawCircle(
-                                color = Color.White,
-                                radius = 7.dp.toPx(),
-                                center = Offset(scrubX, scrubY)
-                            )
-                            drawCircle(
+                            // Draw smooth win probability momentum line
+                            drawPath(
+                                path = path,
                                 color = primaryColor,
-                                radius = 4.5.dp.toPx(),
-                                center = Offset(scrubX, scrubY)
+                                style = Stroke(width = 3.dp.toPx(), cap = StrokeCap.Round)
                             )
+
+                            // Draw scrubbing line and indicator circle
+                            if (scrubbedIndex != null) {
+                                val sIdx = scrubbedIndex!!.coerceIn(0, winProbabilities.size - 1)
+                                val scrubX = sIdx * stepX
+                                val scrubY = height - (winProbabilities[sIdx].homeWinPercentage * height)
+
+                                drawLine(
+                                    color = primaryColor.copy(alpha = 0.8f),
+                                    start = Offset(scrubX, 0f),
+                                    end = Offset(scrubX, height),
+                                    strokeWidth = 2.dp.toPx()
+                                )
+
+                                drawCircle(
+                                    color = Color.White,
+                                    radius = 7.dp.toPx(),
+                                    center = Offset(scrubX, scrubY)
+                                )
+                                drawCircle(
+                                    color = primaryColor,
+                                    radius = 4.5.dp.toPx(),
+                                    center = Offset(scrubX, scrubY)
+                                )
+                            }
                         }
                     }
                 }
@@ -756,8 +869,14 @@ fun SummaryAndWatchTab(detail: GameDetailData) {
 }
 
 @Composable
-fun ScoringPlaysTab(plays: List<PlayItem>) {
+fun ScoringPlaysTab(
+    plays: List<PlayItem>,
+    isNoSpoilers: Boolean = false,
+    isScoreRevealed: Boolean = false,
+    onRevealScore: () -> Unit = {}
+) {
     var scoringOnly by remember { mutableStateOf(false) }
+    val isHidden = isNoSpoilers && !isScoreRevealed
 
     val displayedPlays = remember(plays, scoringOnly) {
         if (scoringOnly) plays.filter { it.isScoring } else plays
@@ -853,11 +972,27 @@ fun ScoringPlaysTab(plays: List<PlayItem>) {
                             }
                             if (play.isScoring) {
                                 Spacer(modifier = Modifier.width(12.dp))
-                                Text(
-                                    text = "${play.awayScore} - ${play.homeScore}",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.Black
-                                )
+                                if (isHidden) {
+                                    Surface(
+                                        shape = RoundedCornerShape(4.dp),
+                                        color = MaterialTheme.colorScheme.surfaceVariant,
+                                        modifier = Modifier.clickable(onClick = onRevealScore)
+                                    ) {
+                                        Text(
+                                            text = "? - ?",
+                                            style = MaterialTheme.typography.titleSmall,
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+                                        )
+                                    }
+                                } else {
+                                    Text(
+                                        text = "${play.awayScore} - ${play.homeScore}",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Black
+                                    )
+                                }
                             }
                         }
                     }
@@ -989,9 +1124,13 @@ fun VideoHighlightsTab(videos: List<VideoHighlight>) {
 fun BoxScoreAndLeadersTab(
     boxStats: List<TeamBoxStat>,
     leaders: List<LeaderCategory>,
-    playerBoxScores: List<TeamPlayerBoxScore> = emptyList()
+    playerBoxScores: List<TeamPlayerBoxScore> = emptyList(),
+    isNoSpoilers: Boolean = false,
+    isScoreRevealed: Boolean = false,
+    onRevealScore: () -> Unit = {}
 ) {
     var selectedTeamIndex by remember { mutableStateOf(0) }
+    val isHidden = isNoSpoilers && !isScoreRevealed
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -1172,7 +1311,7 @@ fun BoxScoreAndLeadersTab(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = stat.awayValue,
+                            text = if (isHidden && stat.label.contains("Point", ignoreCase = true)) "??" else stat.awayValue,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -1182,7 +1321,7 @@ fun BoxScoreAndLeadersTab(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            text = stat.homeValue,
+                            text = if (isHidden && stat.label.contains("Point", ignoreCase = true)) "??" else stat.homeValue,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold
                         )

@@ -11,7 +11,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Visibility
@@ -187,6 +190,8 @@ fun SettingsDialog(
     onChangeAlertThreshold: (Int) -> Unit,
     isMyTeamsOnly: Boolean,
     onToggleMyTeamsOnly: (Boolean) -> Unit,
+    themeMode: String,
+    onSelectThemeMode: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
@@ -205,6 +210,28 @@ fun SettingsDialog(
         },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                // Theme Mode Selection
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Text("App Theme", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("SYSTEM", "DARK", "LIGHT").forEach { mode ->
+                            val isSelected = themeMode.equals(mode, ignoreCase = true)
+                            FilterChip(
+                                selected = isSelected,
+                                onClick = { onSelectThemeMode(mode) },
+                                label = { Text(mode.lowercase().replaceFirstChar { it.uppercase() }) },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+
+                HorizontalDivider()
+
                 // 1. No Spoilers Mode
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -333,12 +360,15 @@ fun ScoreboardScreen(
     }
 
     var sortMode by remember { mutableStateOf(SortMode.EXCITEMENT) }
+    var searchQuery by remember { mutableStateOf("") }
+    var isSearchActive by remember { mutableStateOf(false) }
+    var showDatePickerDialog by remember { mutableStateOf(false) }
 
     // Generate dates: 2 days ago, yesterday, today, tomorrow, +2 days
     val dates = remember { generateDateStrip() }
 
-    // Combined filtering & sorting: Sport League + My Teams + SortMode
-    val filteredGames = remember(games, selectedSport, showMyTeamsOnly, favoriteTeams, sortMode) {
+    // Combined filtering & sorting: Sport League + My Teams + Search Query + SortMode
+    val filteredGames = remember(games, selectedSport, showMyTeamsOnly, favoriteTeams, searchQuery, sortMode) {
         var result = games
 
         // Sport filter
@@ -358,6 +388,20 @@ fun ScoreboardScreen(
             }
         }
 
+        // Real-time Search Query filter (matchup, team name, abbreviation, broadcast channel)
+        if (searchQuery.isNotBlank()) {
+            val q = searchQuery.trim().lowercase()
+            result = result.filter { game ->
+                game.homeTeam.name.lowercase().contains(q) ||
+                game.awayTeam.name.lowercase().contains(q) ||
+                game.homeTeam.shortName.lowercase().contains(q) ||
+                game.awayTeam.shortName.lowercase().contains(q) ||
+                game.homeTeam.abbreviation.lowercase().contains(q) ||
+                game.awayTeam.abbreviation.lowercase().contains(q) ||
+                game.broadcasts.any { it.lowercase().contains(q) }
+            }
+        }
+
         // Sort mode
         when (sortMode) {
             SortMode.EXCITEMENT -> result.sortedByDescending { it.gex }
@@ -368,6 +412,8 @@ fun ScoreboardScreen(
             )
         }
     }
+
+    var themeModeState by remember { mutableStateOf(settingsMgr.getThemeMode()) }
 
     if (showSettingsDialog) {
         SettingsDialog(
@@ -389,8 +435,41 @@ fun ScoreboardScreen(
                 settingsMgr.setMyTeamsOnlyAlerts(enabled)
                 onToggleMyTeamsOnlyAlerts?.invoke(enabled)
             },
+            themeMode = themeModeState,
+            onSelectThemeMode = { mode ->
+                themeModeState = mode
+                settingsMgr.setThemeMode(mode)
+            },
             onDismiss = { showSettingsDialog = false }
         )
+    }
+
+    if (showDatePickerDialog) {
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = System.currentTimeMillis()
+        )
+        DatePickerDialog(
+            onDismissRequest = { showDatePickerDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    datePickerState.selectedDateMillis?.let { millis ->
+                        val cal = Calendar.getInstance().apply { timeInMillis = millis }
+                        val formatted = SimpleDateFormat("yyyyMMdd", Locale.US).format(cal.time)
+                        onDateSelected(formatted)
+                    }
+                    showDatePickerDialog = false
+                }) {
+                    Text("Select Date", fontWeight = FontWeight.Bold)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDatePickerDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            DatePicker(state = datePickerState)
+        }
     }
 
     Scaffold(
@@ -456,6 +535,33 @@ fun ScoreboardScreen(
 
                         Spacer(modifier = Modifier.width(4.dp))
 
+                        // Search Icon Button
+                        IconButton(
+                            onClick = {
+                                isSearchActive = !isSearchActive
+                                if (!isSearchActive) searchQuery = ""
+                            },
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (isSearchActive) Icons.Default.Clear else Icons.Default.Search,
+                                contentDescription = "Search Games",
+                                tint = if (isSearchActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+
+                        // Calendar Date Picker Button
+                        IconButton(
+                            onClick = { showDatePickerDialog = true },
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.CalendarMonth,
+                                contentDescription = "Pick Date",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+
                         // Settings Gear Icon
                         IconButton(
                             onClick = { showSettingsDialog = true },
@@ -468,6 +574,29 @@ fun ScoreboardScreen(
                             )
                         }
                     }
+                }
+
+                // Collapsible Search Field
+                if (isSearchActive) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp, vertical = 4.dp),
+                        placeholder = { Text("Filter by team, city, or broadcast (e.g. Pistons, TNT)...", fontSize = 13.sp) },
+                        singleLine = true,
+                        leadingIcon = {
+                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(18.dp))
+                        },
+                        trailingIcon = {
+                            if (searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(24.dp)) {
+                                    Icon(Icons.Default.Clear, contentDescription = "Clear", modifier = Modifier.size(16.dp))
+                                }
+                            }
+                        }
+                    )
                 }
 
                 // Sport Filter Horizontal Chips + My Teams Filter Chip (Combined Filters)
@@ -819,13 +948,19 @@ fun GameCard(
                 )
             }
 
-            // Teaser line
+            // Teaser line (masked if No Spoilers is active and score is hidden)
             if (game.teaser.isNotBlank()) {
                 Spacer(modifier = Modifier.height(10.dp))
+                val isHiddenSpoiler = isNoSpoilers && !isScoreRevealed && (game.isLive || game.period.contains("Final", ignoreCase = true))
+                val displayTeaser = if (isHiddenSpoiler) {
+                    "🔒 Score masked (${excitement.label} GEX: ${game.gex}) — Tap eye icon above to reveal matchup details & live storyline"
+                } else {
+                    game.teaser
+                }
                 Text(
-                    text = game.teaser,
+                    text = displayTeaser,
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = if (isHiddenSpoiler) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
