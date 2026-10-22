@@ -45,8 +45,15 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        for (widgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, widgetId)
+        val pendingResult = goAsync()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                for (widgetId in appWidgetIds) {
+                    updateAppWidgetSync(context, appWidgetManager, widgetId)
+                }
+            } finally {
+                pendingResult?.finish()
+            }
         }
     }
 
@@ -56,27 +63,36 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
             val appWidgetManager = AppWidgetManager.getInstance(context)
             val thisWidget = ComponentName(context, ThuuzWidgetProvider::class.java)
             val appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget)
-            if (appWidgetIds != null) {
+            if (appWidgetIds != null && appWidgetIds.isNotEmpty()) {
                 onUpdate(context, appWidgetManager, appWidgetIds)
             }
         }
     }
 
     fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+        val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            val favoritesManager = FavoritesManager.getInstance(context)
+            try {
+                updateAppWidgetSync(context, appWidgetManager, appWidgetId)
+            } finally {
+                pendingResult?.finish()
+            }
+        }
+    }
+
+    private suspend fun updateAppWidgetSync(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
+        val favoritesManager = FavoritesManager.getInstance(context)
             val repository = LiveSportsDataRepository(favoritesManager)
             val settingsManager = SettingsManager.getInstance(context)
             val isNoSpoilers = settingsManager.isNoSpoilersEnabled()
 
             val leagues = listOf(
                 SportLeague.NBA,
+                SportLeague.NCAAM,
                 SportLeague.NHL,
                 SportLeague.NFL,
-                SportLeague.MLB,
                 SportLeague.NCAAF,
-                SportLeague.NCAAM,
-                SportLeague.SOCCER
+                SportLeague.MLB
             )
 
             var games: List<Game> = try {
@@ -96,12 +112,21 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
                 emptyList()
             }
 
-            if (games.isEmpty()) {
-                games = getFallbackWidgetGames()
+            val favoriteTeams = favoritesManager.getFavoriteTeams()
+            val hasFavoriteTeams = favoriteTeams.isNotEmpty()
+
+            // Filter games strictly to favorite teams
+            val favoriteGames = if (hasFavoriteTeams) {
+                games.filter { game ->
+                    favoritesManager.isFavorite(game.homeTeam.name, game.homeTeam.shortName, game.homeTeam.abbreviation) ||
+                    favoritesManager.isFavorite(game.awayTeam.name, game.awayTeam.shortName, game.awayTeam.abbreviation)
+                }
+            } else {
+                emptyList()
             }
 
-            // Top 3 highest-GEX live or upcoming games
-            val topGames = games
+            // Top favorite games: prioritize live games, then highest GEX
+            val topGames = favoriteGames
                 .sortedWith(
                     compareByDescending<Game> { it.isLive }
                         .thenByDescending { it.gex }
@@ -126,6 +151,12 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
             views.removeAllViews(R.id.widget_games_container)
 
             if (topGames.isEmpty()) {
+                val emptyMessage = if (!hasFavoriteTeams) {
+                    "No favorite teams selected. Star teams in Buzzer to see them here."
+                } else {
+                    "No live or upcoming games for your favorite teams."
+                }
+                views.setTextViewText(R.id.widget_empty_text, emptyMessage)
                 views.setViewVisibility(R.id.widget_empty_text, View.VISIBLE)
                 views.setViewVisibility(R.id.widget_games_container, View.GONE)
             } else {
@@ -154,10 +185,10 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
                     itemViews.setTextViewText(R.id.widget_game_status, statusText)
 
                     val (gexLabel, gexColor) = when {
-                        game.gex >= 85 -> "GREAT" to Color.parseColor("#2E7D32")
-                        game.gex >= 65 -> "GOOD" to Color.parseColor("#1976D2")
-                        game.gex >= 40 -> "OK" to Color.parseColor("#F57C00")
-                        else -> "DUD" to Color.parseColor("#757575")
+                        game.gex >= 85 -> "GREAT" to Color.parseColor("#FF5A4D")
+                        game.gex >= 65 -> "GOOD" to Color.parseColor("#00ACC1")
+                        game.gex >= 40 -> "OK" to Color.parseColor("#F9A825")
+                        else -> "DUD" to Color.parseColor("#78909C")
                     }
                     itemViews.setTextViewText(R.id.widget_game_gex, "${game.gex} $gexLabel")
                     itemViews.setInt(R.id.widget_game_gex, "setBackgroundColor", gexColor)
@@ -182,7 +213,6 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
-        }
     }
 
     private fun getFallbackWidgetGames(): List<Game> {

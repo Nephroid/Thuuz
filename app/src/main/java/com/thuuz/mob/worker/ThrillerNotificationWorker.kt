@@ -28,7 +28,7 @@ class ThrillerNotificationWorker(
 
     companion object {
         const val CHANNEL_ID = "thuuz_thriller_alerts"
-        const val CHANNEL_NAME = "Thuuz Thriller & Crunch-Time Alerts"
+        const val CHANNEL_NAME = "Buzzer Thriller & Crunch-Time Alerts"
 
         fun createNotificationChannel(context: Context) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

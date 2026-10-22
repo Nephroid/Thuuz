@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
@@ -40,17 +41,17 @@ import java.util.*
 enum class SportLeague(val displayName: String, val sportPath: String, val leaguePath: String) {
     ALL("All", "", ""),
     NBA("NBA", "basketball", "nba"),
+    NCAAM("NCAAM", "basketball", "mens-college-basketball"),
     NHL("NHL", "hockey", "nhl"),
     NFL("NFL", "football", "nfl"),
-    MLB("MLB", "baseball", "mlb"),
     NCAAF("NCAAF", "football", "college-football"),
-    NCAAM("NCAAM", "basketball", "mens-college-basketball"),
-    SOCCER("Soccer", "soccer", "eng.1")
+    MLB("MLB", "baseball", "mlb")
 }
 
 enum class SortMode(val label: String) {
     EXCITEMENT("Excitement (GEX)"),
-    LIVE_TIME("Live / Time First")
+    LIVE_TIME("Live / Time First"),
+    TIME("Time (Earliest)")
 }
 
 data class DateFilterItem(
@@ -79,10 +80,48 @@ data class Game(
     val teaser: String = "",
     val sport: String = "basketball",
     val league: String = "nba",
-    val spread: Double? = null
+    val spread: Double? = null,
+    val startTime: String? = null
 )
 
-// Detail screen support data structures
+fun parseGameStartTimeMillis(startTime: String?): Long {
+    if (startTime.isNullOrBlank()) return Long.MAX_VALUE
+    val formats = listOf(
+        "yyyy-MM-dd'T'HH:mm'Z'",
+        "yyyy-MM-dd'T'HH:mm:ss'Z'",
+        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    )
+    for (fmt in formats) {
+        try {
+            val sdf = SimpleDateFormat(fmt, Locale.US).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }
+            val date = sdf.parse(startTime)
+            if (date != null) return date.time
+        } catch (_: Exception) {}
+    }
+    return Long.MAX_VALUE
+}
+
+fun formatGamePeriodOrTime(game: Game): String {
+    if (game.isLive) {
+        return if (game.timeRemaining.isNotBlank()) "${game.period} - ${game.timeRemaining}" else game.period
+    }
+    if (game.period.contains("Final", ignoreCase = true)) {
+        return game.period
+    }
+    // If upcoming game and has startTime, format nicely in local timezone
+    if (!game.startTime.isNullOrBlank()) {
+        val millis = parseGameStartTimeMillis(game.startTime)
+        if (millis != Long.MAX_VALUE) {
+            val localFormat = SimpleDateFormat("h:mm a z", Locale.getDefault()).apply {
+                timeZone = TimeZone.getDefault()
+            }
+            return localFormat.format(Date(millis))
+        }
+    }
+    return game.period
+}
 data class WinProbabilityPoint(
     val playId: String,
     val homeWinPercentage: Float, // 0.0 - 1.0
@@ -167,10 +206,10 @@ data class GameDetailData(
 )
 
 enum class ExcitementRating(val label: String, val color: Color) {
-    GREAT("GREAT", Color(0xFF2E7D32)), // Darker Thuuz Green
-    GOOD("GOOD", Color(0xFF1976D2)),   // Thuuz Blue
-    OK("OK", Color(0xFFF57C00)),       // Amber/Orange
-    DUD("DUD", Color(0xFF757575))      // Gray
+    GREAT("GREAT", Color(0xFFFF5A4D)), // Hot coral (stands out against ocean blue)
+    GOOD("GOOD", Color(0xFF00ACC1)),   // Teal
+    OK("OK", Color(0xFFF9A825)),       // Amber
+    DUD("DUD", Color(0xFF78909C))      // Slate
 }
 
 fun getExcitementRating(gex: Int): ExcitementRating {
@@ -205,7 +244,7 @@ fun SettingsDialog(
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Thuuz Settings", fontWeight = FontWeight.Bold)
+                Text("Buzzer Settings", fontWeight = FontWeight.Bold)
             }
         },
         text = {
@@ -338,6 +377,8 @@ fun ScoreboardScreen(
     onToggleMyTeamsOnlyAlerts: ((Boolean) -> Unit)? = null,
     revealedGameIds: Set<String>? = null,
     onRevealScore: ((String) -> Unit)? = null,
+    themeMode: String? = null,
+    onSelectThemeMode: ((String) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -410,10 +451,16 @@ fun ScoreboardScreen(
                     .thenByDescending { !it.isLive && !it.period.contains("Final", ignoreCase = true) }
                     .thenByDescending { it.gex }
             )
+            SortMode.TIME -> result.sortedWith(
+                compareBy<Game> { parseGameStartTimeMillis(it.startTime) }
+                    .thenByDescending { it.gex }
+            )
         }
     }
 
-    var themeModeState by remember { mutableStateOf(settingsMgr.getThemeMode()) }
+    var themeModeState by remember(themeMode) {
+        mutableStateOf(themeMode ?: settingsMgr.getThemeMode())
+    }
 
     if (showSettingsDialog) {
         SettingsDialog(
@@ -439,6 +486,7 @@ fun ScoreboardScreen(
             onSelectThemeMode = { mode ->
                 themeModeState = mode
                 settingsMgr.setThemeMode(mode)
+                onSelectThemeMode?.invoke(mode)
             },
             onDismiss = { showSettingsDialog = false }
         )
@@ -453,8 +501,10 @@ fun ScoreboardScreen(
             confirmButton = {
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
-                        val cal = Calendar.getInstance().apply { timeInMillis = millis }
-                        val formatted = SimpleDateFormat("yyyyMMdd", Locale.US).format(cal.time)
+                        val sdfUtc = SimpleDateFormat("yyyyMMdd", Locale.US).apply {
+                            timeZone = TimeZone.getTimeZone("UTC")
+                        }
+                        val formatted = sdfUtc.format(Date(millis))
                         onDateSelected(formatted)
                     }
                     showDatePickerDialog = false
@@ -476,24 +526,27 @@ fun ScoreboardScreen(
         modifier = modifier.fillMaxSize().statusBarsPadding(),
         topBar = {
             Column(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
-                // Main Header Title with Brand & Actions
+                // Main Header Title with Brand & Actions (Responsive & Non-overrunning)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = 14.dp, vertical = 10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.weight(1f, fill = false).padding(end = 6.dp)
+                    ) {
                         Surface(
                             shape = CircleShape,
-                            color = Color(0xFF2E7D32),
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(28.dp)
                         ) {
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
-                                    text = "T",
-                                    color = Color.White,
+                                    text = "B",
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                     fontWeight = FontWeight.Black,
                                     fontSize = 16.sp
                                 )
@@ -501,39 +554,37 @@ fun ScoreboardScreen(
                         }
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Thuuz Sports",
+                            text = "Buzzer",
                             style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        // Quick Test Alert Button
-                        FilledTonalButton(
-                            onClick = onTestThrillerAlert,
-                            contentPadding = PaddingValues(horizontal = 10.dp, vertical = 2.dp),
-                            modifier = Modifier.height(32.dp)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Notifications,
-                                contentDescription = "Test Alert",
-                                modifier = Modifier.size(14.dp)
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text("Test Alert", style = MaterialTheme.typography.labelSmall)
-                        }
-
-                        Spacer(modifier = Modifier.width(6.dp))
-
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
                         if (isLoading) {
-                            CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                            Box(
+                                modifier = Modifier.size(36.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                            }
                         } else {
-                            TextButton(onClick = onRefresh) {
-                                Text("Refresh", style = MaterialTheme.typography.labelMedium)
+                            IconButton(
+                                onClick = onRefresh,
+                                modifier = Modifier.size(36.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Refresh,
+                                    contentDescription = "Refresh Games",
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                             }
                         }
-
-                        Spacer(modifier = Modifier.width(4.dp))
 
                         // Search Icon Button
                         IconButton(
@@ -558,6 +609,18 @@ fun ScoreboardScreen(
                             Icon(
                                 imageVector = Icons.Default.CalendarMonth,
                                 contentDescription = "Pick Date",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+
+                        // Quick Test Alert Button
+                        IconButton(
+                            onClick = onTestThrillerAlert,
+                            modifier = Modifier.size(36.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Notifications,
+                                contentDescription = "Test Alert Notification",
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
@@ -704,6 +767,12 @@ fun ScoreboardScreen(
                             label = { Text("Live First", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
                             modifier = Modifier.height(28.dp)
                         )
+                        FilterChip(
+                            selected = sortMode == SortMode.TIME,
+                            onClick = { sortMode = SortMode.TIME },
+                            label = { Text("Time", fontSize = 11.sp, fontWeight = FontWeight.SemiBold) },
+                            modifier = Modifier.height(28.dp)
+                        )
                     }
                 }
 
@@ -825,23 +894,25 @@ fun GameCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Sport/League Badge + Time & Broadcast info
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Sport/League Badge + Time & Broadcast info (Safely constrained to prevent pushing GEX pill)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.weight(1f, fill = false).padding(end = 8.dp)
+                ) {
                     // Compact Sport / League Badge Chip
                     val leagueBadge = when (game.league.lowercase()) {
                         "nba" -> "NBA"
+                        "mens-college-basketball" -> "NCAAM"
                         "nhl" -> "NHL"
                         "nfl" -> "NFL"
-                        "mlb" -> "MLB"
                         "college-football" -> "NCAAF"
-                        "mens-college-basketball" -> "NCAAM"
-                        "eng.1", "soccer" -> "SOCCER"
+                        "mlb" -> "MLB"
                         else -> game.league.ifBlank { game.sport }.uppercase()
                     }
                     Surface(
                         shape = RoundedCornerShape(4.dp),
                         color = MaterialTheme.colorScheme.tertiaryContainer,
-                        modifier = Modifier.padding(end = 8.dp)
+                        modifier = Modifier.padding(end = 6.dp)
                     ) {
                         Text(
                             text = leagueBadge,
@@ -858,31 +929,39 @@ fun GameCard(
                             color = Color.Red,
                             modifier = Modifier.size(8.dp)
                         ) {}
-                        Spacer(modifier = Modifier.width(6.dp))
+                        Spacer(modifier = Modifier.width(5.dp))
                     }
                     Text(
-                        text = if (game.isLive) {
-                            if (game.timeRemaining.isNotBlank()) "${game.period} - ${game.timeRemaining}"
-                            else game.period
-                        } else game.period,
+                        text = formatGamePeriodOrTime(game),
                         style = MaterialTheme.typography.bodySmall,
                         color = if (game.isLive) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
 
-                    // TV Network badge
+                    // TV Network badge (weighted with fill=false so it shrinks with ellipsis before clipping trailing star icon)
                     if (game.broadcasts.isNotEmpty()) {
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        val broadcastText = if (game.broadcasts.size > 1) {
+                            "${game.broadcasts.first()} +${game.broadcasts.size - 1}"
+                        } else {
+                            game.broadcasts.first()
+                        }
                         Surface(
                             shape = RoundedCornerShape(4.dp),
                             color = MaterialTheme.colorScheme.secondaryContainer,
-                            modifier = Modifier.padding(vertical = 2.dp)
+                            modifier = Modifier
+                                .weight(1f, fill = false)
+                                .padding(vertical = 2.dp)
                         ) {
                             Text(
-                                text = game.broadcasts.take(2).joinToString(" / "),
+                                text = broadcastText,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                             )
                         }
@@ -890,7 +969,7 @@ fun GameCard(
 
                     // Favorite team star badge
                     if (hasFavorite) {
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Icon(
                             imageVector = Icons.Filled.Star,
                             contentDescription = "Favorite Team Game",
@@ -900,8 +979,11 @@ fun GameCard(
                     }
                 }
 
-                // Thuuz GEX Excitement Rating Pill
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                // Buzzer GEX Excitement Rating Pill (pinned to right, never squeezed or pushed off)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
                     Text(
                         text = "${game.gex}",
                         style = MaterialTheme.typography.titleMedium,
@@ -927,13 +1009,16 @@ fun GameCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
+            val isActiveOrFinished = game.isLive || game.period.contains("Final", ignoreCase = true) || game.homeTeam.score > 0 || game.awayTeam.score > 0
+            val shouldMaskSpoilers = isNoSpoilers && isActiveOrFinished
+
             // Teams and Scores with Favorite toggle buttons
             Column {
                 TeamRow(
                     team = game.awayTeam,
                     isFavorite = awayIsFavorite,
                     onToggleFavorite = onToggleAwayFavorite,
-                    isNoSpoilers = isNoSpoilers,
+                    isNoSpoilers = shouldMaskSpoilers,
                     isScoreRevealed = isScoreRevealed,
                     onRevealScore = onRevealScore
                 )
@@ -942,7 +1027,7 @@ fun GameCard(
                     team = game.homeTeam,
                     isFavorite = homeIsFavorite,
                     onToggleFavorite = onToggleHomeFavorite,
-                    isNoSpoilers = isNoSpoilers,
+                    isNoSpoilers = shouldMaskSpoilers,
                     isScoreRevealed = isScoreRevealed,
                     onRevealScore = onRevealScore
                 )
@@ -951,7 +1036,7 @@ fun GameCard(
             // Teaser line (masked if No Spoilers is active and score is hidden)
             if (game.teaser.isNotBlank()) {
                 Spacer(modifier = Modifier.height(10.dp))
-                val isHiddenSpoiler = isNoSpoilers && !isScoreRevealed && (game.isLive || game.period.contains("Final", ignoreCase = true))
+                val isHiddenSpoiler = shouldMaskSpoilers && !isScoreRevealed
                 val displayTeaser = if (isHiddenSpoiler) {
                     "🔒 Score masked (${excitement.label} GEX: ${game.gex}) — Tap eye icon above to reveal matchup details & live storyline"
                 } else {

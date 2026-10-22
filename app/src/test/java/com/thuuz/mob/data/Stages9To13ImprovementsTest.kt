@@ -118,4 +118,89 @@ class Stages9To13ImprovementsTest {
         assertEquals(1, filtered2.size)
         assertEquals("New York Rangers", filtered2[0].homeTeam.name)
     }
+
+    @Test
+    fun testTimeSortEarliestToLatest() {
+        val earlyGame = Game(
+            id = "1",
+            homeTeam = Team("1", "Boston Celtics", null, 0, "Celtics", "BOS"),
+            awayTeam = Team("2", "Cleveland Cavaliers", null, 0, "Cavaliers", "CLE"),
+            gex = 75,
+            period = "Scheduled",
+            timeRemaining = "",
+            isLive = false,
+            sport = "basketball",
+            league = "nba",
+            startTime = "2026-10-22T23:00Z" // 7:00 PM EDT
+        )
+        val lateGame = Game(
+            id = "2",
+            homeTeam = Team("3", "Los Angeles Lakers", null, 0, "Lakers", "LAL"),
+            awayTeam = Team("4", "Denver Nuggets", null, 0, "Nuggets", "DEN"),
+            gex = 90, // Higher GEX, but starts later
+            period = "Scheduled",
+            timeRemaining = "",
+            isLive = false,
+            sport = "basketball",
+            league = "nba",
+            startTime = "2026-10-23T02:30Z" // 10:30 PM EDT
+        )
+        val middleGame = Game(
+            id = "3",
+            homeTeam = Team("5", "Chicago Bulls", null, 0, "Bulls", "CHI"),
+            awayTeam = Team("6", "Miami Heat", null, 0, "Heat", "MIA"),
+            gex = 80,
+            period = "Scheduled",
+            timeRemaining = "",
+            isLive = false,
+            sport = "basketball",
+            league = "nba",
+            startTime = "2026-10-23T00:00Z" // 8:00 PM EDT
+        )
+
+        val unsorted = listOf(lateGame, earlyGame, middleGame)
+        val sortedByTime = unsorted.sortedWith(
+            compareBy<Game> { com.thuuz.mob.ui.compose.parseGameStartTimeMillis(it.startTime) }
+                .thenByDescending { it.gex }
+        )
+
+        assertEquals("1", sortedByTime[0].id) // 7:00 PM EDT
+        assertEquals("3", sortedByTime[1].id) // 8:00 PM EDT
+        assertEquals("2", sortedByTime[2].id) // 10:30 PM EDT
+    }
+
+    @Test
+    fun testWidgetFavoritesOnlyFiltering() {
+        val favTeams = setOf("Boston Celtics", "Detroit Pistons")
+        fun isFav(name: String): Boolean = favTeams.any { fav ->
+            name.contains(fav, ignoreCase = true) || fav.contains(name, ignoreCase = true)
+        }
+
+        val game1 = Game(
+            id = "1",
+            homeTeam = Team("1", "Boston Celtics", null, 100, "Celtics", "BOS"),
+            awayTeam = Team("2", "Miami Heat", null, 98, "Heat", "MIA"),
+            gex = 85,
+            period = "Q4",
+            timeRemaining = "1:00",
+            isLive = true
+        )
+        val game2 = Game(
+            id = "2",
+            homeTeam = Team("3", "Golden State Warriors", null, 102, "Warriors", "GSW"),
+            awayTeam = Team("4", "Los Angeles Lakers", null, 101, "Lakers", "LAL"),
+            gex = 98,
+            period = "Q4",
+            timeRemaining = "0:10",
+            isLive = true
+        )
+
+        val games = listOf(game1, game2)
+        val widgetGames = games.filter { game ->
+            isFav(game.homeTeam.name) || isFav(game.awayTeam.name)
+        }
+
+        assertEquals(1, widgetGames.size)
+        assertEquals("Boston Celtics", widgetGames[0].homeTeam.name)
+    }
 }

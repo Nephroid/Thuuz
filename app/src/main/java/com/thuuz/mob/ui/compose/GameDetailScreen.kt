@@ -53,7 +53,7 @@ fun GameDetailScreen(
     onRevealScore: () -> Unit = {}
 ) {
     var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabTitles = listOf("Summary & Watch", "Highlights", "Plays", "Box Score & Leaders")
+    val tabTitles = listOf("Summary", "Highlights", "Plays", "Box Score")
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -133,11 +133,15 @@ fun GameDetailScreen(
                     onRevealScore = onRevealScore
                 )
 
-                // Secondary Tab Navigation (Summary, Highlights, Plays, Box Score)
-                PrimaryTabRow(
+                // Secondary Tab Navigation (Responsive Scrollable Tabs for Folded & Unfolded)
+                ScrollableTabRow(
                     selectedTabIndex = selectedTabIndex,
+                    edgePadding = 16.dp,
                     containerColor = MaterialTheme.colorScheme.surface,
-                    contentColor = MaterialTheme.colorScheme.primary
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    divider = {
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                    }
                 ) {
                     tabTitles.forEachIndexed { index, title ->
                         Tab(
@@ -150,7 +154,8 @@ fun GameDetailScreen(
                                 Text(
                                     text = label,
                                     fontWeight = if (selectedTabIndex == index) FontWeight.Bold else FontWeight.Normal,
-                                    fontSize = 12.sp
+                                    fontSize = 13.sp,
+                                    maxLines = 1
                                 )
                             }
                         )
@@ -656,7 +661,10 @@ fun MomentumExcitementCurve(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.weight(1f).padding(end = 8.dp)
+                            ) {
                                 Text(
                                     text = timeClockText,
                                     style = MaterialTheme.typography.labelSmall,
@@ -667,7 +675,9 @@ fun MomentumExcitementCurve(
                                 Text(
                                     text = probText,
                                     style = MaterialTheme.typography.labelSmall,
-                                    fontWeight = FontWeight.SemiBold
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
                                 )
                             }
                             Surface(
@@ -1307,23 +1317,30 @@ fun BoxScoreAndLeadersTab(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = if (isHidden && stat.label.contains("Point", ignoreCase = true)) "??" else stat.awayValue,
                             style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier.weight(1f)
                         )
                         Text(
                             text = stat.label,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.weight(2f)
                         )
                         Text(
                             text = if (isHidden && stat.label.contains("Point", ignoreCase = true)) "??" else stat.homeValue,
                             style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.weight(1f)
                         )
                     }
                 }

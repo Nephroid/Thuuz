@@ -30,7 +30,7 @@ import com.thuuz.mob.data.LiveSportsDataRepository
 import com.thuuz.mob.data.SettingsManager
 import com.thuuz.mob.ui.compose.*
 import com.thuuz.mob.ui.theme.ThemeMode
-import com.thuuz.mob.ui.theme.ThuuzTheme
+import com.thuuz.mob.ui.theme.BuzzerTheme
 import com.thuuz.mob.worker.ThrillerNotificationWorker
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,7 +79,7 @@ class MainActivity : ComponentActivity() {
                 else -> ThemeMode.SYSTEM
             }
 
-            ThuuzTheme(themeMode = themeMode) {
+            BuzzerTheme(themeMode = themeMode) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -135,12 +135,11 @@ class MainActivity : ComponentActivity() {
                         val leagues = if (sport == SportLeague.ALL) {
                             listOf(
                                 SportLeague.NBA,
+                                SportLeague.NCAAM,
                                 SportLeague.NHL,
                                 SportLeague.NFL,
-                                SportLeague.MLB,
                                 SportLeague.NCAAF,
-                                SportLeague.NCAAM,
-                                SportLeague.SOCCER
+                                SportLeague.MLB
                             )
                         } else {
                             listOf(sport)
@@ -176,12 +175,11 @@ class MainActivity : ComponentActivity() {
                             val leagues = if (selectedSport == SportLeague.ALL) {
                                 listOf(
                                     SportLeague.NBA,
+                                    SportLeague.NCAAM,
                                     SportLeague.NHL,
                                     SportLeague.NFL,
-                                    SportLeague.MLB,
                                     SportLeague.NCAAF,
-                                    SportLeague.NCAAM,
-                                    SportLeague.SOCCER
+                                    SportLeague.MLB
                                 )
                             } else {
                                 listOf(selectedSport)
@@ -329,6 +327,7 @@ class MainActivity : ComponentActivity() {
                                             favoritesManager.toggleFavoriteTeam(teamName)
                                             favoriteTeams = favoritesManager.getFavoriteTeams()
                                             gamesState = repository.recalculateExcitement(gamesState)
+                                            com.thuuz.mob.widget.ThuuzWidgetProvider.updateAllWidgets(this@MainActivity)
                                         },
                                         showMyTeamsOnly = showMyTeamsOnly,
                                         onToggleMyTeamsOnly = {
@@ -347,7 +346,9 @@ class MainActivity : ComponentActivity() {
                                         revealedGameIds = revealedGameIds,
                                         onRevealScore = {
                                             revealedGameIds = settingsManager.getRevealedGameIds()
-                                        }
+                                        },
+                                        themeMode = currentThemeModeStr.value,
+                                        onSelectThemeMode = { currentThemeModeStr.value = it }
                                     )
                                 }
 
@@ -438,6 +439,7 @@ class MainActivity : ComponentActivity() {
                                         favoritesManager.toggleFavoriteTeam(teamName)
                                         favoriteTeams = favoritesManager.getFavoriteTeams()
                                         gamesState = repository.recalculateExcitement(gamesState)
+                                        com.thuuz.mob.widget.ThuuzWidgetProvider.updateAllWidgets(this@MainActivity)
                                     },
                                     showMyTeamsOnly = showMyTeamsOnly,
                                     onToggleMyTeamsOnly = {
@@ -455,7 +457,9 @@ class MainActivity : ComponentActivity() {
                                     revealedGameIds = revealedGameIds,
                                     onRevealScore = {
                                         revealedGameIds = settingsManager.getRevealedGameIds()
-                                    }
+                                    },
+                                    themeMode = currentThemeModeStr.value,
+                                    onSelectThemeMode = { currentThemeModeStr.value = it }
                                 )
                             }
                         }

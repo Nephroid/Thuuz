@@ -58,7 +58,7 @@
         android:id="@+id/widget_game_gex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#2E7D32"
+        android:background="#FF5A4D"
         android:text="95 GREAT"
         android:textColor="#FFFFFF"
         android:textSize="11sp"
