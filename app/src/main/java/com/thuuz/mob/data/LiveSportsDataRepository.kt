@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONArray
 import org.json.JSONObject
 import okhttp3.OkHttpClient
@@ -112,7 +113,7 @@ class LiveSportsDataRepository(
         return games
     }
 
-    fun fetchLiveGamesSync(): List<Game> {
+    fun fetchLiveGamesSync(): List<Game> = runBlocking(Dispatchers.IO) {
         val targetLeagues = listOf(
             SportLeague.NBA,
             SportLeague.NHL,
@@ -122,19 +123,23 @@ class LiveSportsDataRepository(
             SportLeague.NCAAM,
             SportLeague.SOCCER
         )
-        val games = mutableListOf<Game>()
-        for (league in targetLeagues) {
-            try {
-                val endpoint = buildScoreboardUrl(league, null)
-                val json = makeHttpRequest(endpoint)
-                if (json.isNotEmpty()) {
-                    games.addAll(parseGames(json, league))
+        val deferredList = targetLeagues.map { league ->
+            async {
+                try {
+                    val endpoint = buildScoreboardUrl(league, null)
+                    val json = makeHttpRequest(endpoint)
+                    if (json.isNotEmpty()) {
+                        parseGames(json, league)
+                    } else {
+                        emptyList()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    emptyList()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         }
-        return games
+        deferredList.awaitAll().flatten()
     }
 
     fun fetchLiveGamesAsync(callback: FetchCallback) {
