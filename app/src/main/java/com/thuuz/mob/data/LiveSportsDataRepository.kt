@@ -1053,31 +1053,17 @@ class LiveSportsDataRepository(
                 )
             )
             "20261021" -> listOf(
-                Game(
+                exhibitionFinal(
                     id = "ncaam_exh_20261021_lou_ku",
-                    homeTeam = Team("2305", "Kansas Jayhawks", "https://a.espncdn.com/i/teamlogos/ncaa/500/2305.png", 0, "Kansas", "KU"),
-                    awayTeam = Team("97", "Louisville Cardinals", "https://a.espncdn.com/i/teamlogos/ncaa/500/97.png", 0, "Louisville", "LOU"),
-                    gex = 70,
-                    period = "7:00 PM ET (Exh)",
-                    timeRemaining = "",
-                    isLive = false,
-                    broadcasts = listOf("ESPNU"),
-                    teaser = "#11 Louisville visits #17 Kansas at Allen Fieldhouse in a preseason exhibition.",
-                    sport = "basketball",
-                    league = "mens-college-basketball"
+                    homeId = "2305", homeName = "Kansas Jayhawks", homeShort = "Kansas", homeAbbr = "KU", homeScore = 83,
+                    awayId = "97", awayName = "Louisville Cardinals", awayShort = "Louisville", awayAbbr = "LOU", awayScore = 89,
+                    teaser = "#11 Louisville upset #17 Kansas 89-83 at Allen Fieldhouse. Jackson Shelstad led Louisville with 23 points; Tre White led Kansas with 25 points."
                 ),
-                Game(
+                exhibitionFinal(
                     id = "ncaam_exh_20261021_cbu_ucla",
-                    homeTeam = Team("26", "UCLA Bruins", "https://a.espncdn.com/i/teamlogos/ncaa/500/26.png", 0, "UCLA", "UCLA"),
-                    awayTeam = Team("2856", "California Baptist Lancers", "https://a.espncdn.com/i/teamlogos/ncaa/500/2856.png", 0, "Cal Baptist", "CBU"),
-                    gex = 50,
-                    period = "Exhibition",
-                    timeRemaining = "",
-                    isLive = false,
-                    broadcasts = emptyList(),
-                    teaser = "California Baptist visits UCLA at Pauley Pavilion in a preseason exhibition.",
-                    sport = "basketball",
-                    league = "mens-college-basketball"
+                    homeId = "26", homeName = "UCLA Bruins", homeShort = "UCLA", homeAbbr = "UCLA", homeScore = 100,
+                    awayId = "2856", awayName = "California Baptist Lancers", awayShort = "Cal Baptist", awayAbbr = "CBU", awayScore = 53,
+                    teaser = "UCLA dominated California Baptist 100-53 at Pauley Pavilion. Eric Dailey Jr. scored a game-high 25 points on 7-of-9 shooting from three."
                 )
             )
             else -> emptyList()
@@ -1117,17 +1103,41 @@ class LiveSportsDataRepository(
         val game = getSupplementalNcaamGames("20261020").firstOrNull { it.id == gameId }
             ?: getSupplementalNcaamGames("20261021").firstOrNull { it.id == gameId }
             ?: return null
-        val leaders = if (gameId == "ncaam_exh_20261020_uconn_msu") listOf(
-            LeaderCategory("Michigan State", LeaderPlayer("Jeremy Fears Jr.", "", "G", "23 PTS · 8 AST")),
-            LeaderCategory("UConn", LeaderPlayer("Nik Khamenia", "", "F", "19 PTS")),
-            LeaderCategory("UConn", LeaderPlayer("Silas Demary Jr.", "", "G", "16 PTS")),
-            LeaderCategory("UConn", LeaderPlayer("Colben Landrew", "", "G", "13 PTS"))
-        ) else emptyList()
-        val stats = if (gameId == "ncaam_exh_20261020_uconn_msu") listOf(
-            TeamBoxStat("1st Half Points", "30", "22"),
-            TeamBoxStat("2nd Half Points", "48", "48"),
-            TeamBoxStat("Total Points", "78", "70")
-        ) else emptyList()
+        val leaders = when (gameId) {
+            "ncaam_exh_20261020_uconn_msu" -> listOf(
+                LeaderCategory("Michigan State", LeaderPlayer("Jeremy Fears Jr.", "", "G", "23 PTS · 8 AST")),
+                LeaderCategory("UConn", LeaderPlayer("Nik Khamenia", "", "F", "19 PTS")),
+                LeaderCategory("UConn", LeaderPlayer("Silas Demary Jr.", "", "G", "16 PTS")),
+                LeaderCategory("UConn", LeaderPlayer("Colben Landrew", "", "G", "13 PTS"))
+            )
+            "ncaam_exh_20261021_lou_ku" -> listOf(
+                LeaderCategory("Louisville", LeaderPlayer("Jackson Shelstad", "", "G", "23 PTS")),
+                LeaderCategory("Louisville", LeaderPlayer("Obinna Ekezie Jr.", "", "F", "16 PTS · 5 BLK")),
+                LeaderCategory("Kansas", LeaderPlayer("Tre White", "", "G", "25 PTS")),
+                LeaderCategory("Kansas", LeaderPlayer("Melvin Council Jr.", "", "G", "20 PTS")),
+                LeaderCategory("Kansas", LeaderPlayer("Tyran Stokes", "", "F", "15 PTS · 9 REB"))
+            )
+            "ncaam_exh_20261021_cbu_ucla" -> listOf(
+                LeaderCategory("UCLA", LeaderPlayer("Eric Dailey Jr.", "", "F", "25 PTS · 7 REB")),
+                LeaderCategory("UCLA", LeaderPlayer("Joe Philon", "", "F", "13 PTS · 7 REB")),
+                LeaderCategory("UCLA", LeaderPlayer("Nikola Kusturica", "", "F", "10 PTS · 8 REB · 6 AST"))
+            )
+            else -> emptyList()
+        }
+        val stats = when (gameId) {
+            "ncaam_exh_20261020_uconn_msu" -> listOf(
+                TeamBoxStat("1st Half Points", "30", "22"),
+                TeamBoxStat("2nd Half Points", "48", "48"),
+                TeamBoxStat("Total Points", "78", "70")
+            )
+            "ncaam_exh_20261021_lou_ku" -> listOf(
+                TeamBoxStat("Final Score", "89", "83")
+            )
+            "ncaam_exh_20261021_cbu_ucla" -> listOf(
+                TeamBoxStat("Final Score", "53", "100")
+            )
+            else -> emptyList()
+        }
         return GameDetailData(
             gameId = game.id,
             homeTeam = game.homeTeam,

@@ -57,6 +57,10 @@ class PolishAndStage4Test {
         assertTrue(favMgr.matchesFavorite("Real", "Real Madrid", "Madrid", "RMD"))
         // "Warriors" matches "Golden State Warriors"
         assertTrue(favMgr.matchesFavorite("Warriors", "Golden State Warriors", "Warriors", "GSW"))
+
+        // Apostrophe flexibility: 76'ers vs 76ers
+        assertTrue(favMgr.matchesFavorite("76'ers", "Philadelphia 76ers", "76ers", "PHI"))
+        assertTrue(favMgr.matchesFavorite("76ers", "76'ers", "76'ers", "PHI"))
     }
 
     @Test

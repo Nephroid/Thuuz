@@ -34,12 +34,13 @@ class FavoritesManager(context: Context) {
     }
 
     fun matchesFavorite(favorite: String, teamName: String, shortName: String? = null, abbreviation: String? = null): Boolean {
-        val favClean = favorite.trim().lowercase()
+        val stripApostrophes = { s: String -> s.replace("'", "").replace("’", "") }
+        val favClean = stripApostrophes(favorite.trim().lowercase())
         if (favClean.isEmpty()) return false
 
-        val nameClean = teamName.trim().lowercase()
-        val shortClean = (shortName ?: "").trim().lowercase()
-        val abbrClean = (abbreviation ?: "").trim().lowercase()
+        val nameClean = stripApostrophes(teamName.trim().lowercase())
+        val shortClean = stripApostrophes((shortName ?: "").trim().lowercase())
+        val abbrClean = stripApostrophes((abbreviation ?: "").trim().lowercase())
 
         // 1. Exact match on any of the variations
         if (favClean == nameClean ||

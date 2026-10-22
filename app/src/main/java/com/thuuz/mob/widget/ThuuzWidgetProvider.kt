@@ -24,6 +24,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class ThuuzWidgetProvider : AppWidgetProvider() {
 
@@ -95,18 +99,31 @@ class ThuuzWidgetProvider : AppWidgetProvider() {
                 SportLeague.MLB
             )
 
+            val todayStr = SimpleDateFormat("yyyyMMdd", Locale.US).apply {
+                timeZone = TimeZone.getDefault()
+            }.format(Date())
+
             var games: List<Game> = try {
-                withTimeoutOrNull(10000L) {
-                    val deferredList: List<Deferred<List<Game>>> = leagues.map { league ->
-                        async(Dispatchers.IO) {
-                            try {
-                                repository.fetchGamesSync(league, null)
-                            } catch (e: Exception) {
-                                emptyList()
+                withTimeoutOrNull(12000L) {
+                    val deferredList: List<Deferred<List<Game>>> = leagues.flatMap { league ->
+                        listOf(
+                            async(Dispatchers.IO) {
+                                try {
+                                    repository.fetchGamesSync(league, null)
+                                } catch (e: Exception) {
+                                    emptyList()
+                                }
+                            },
+                            async(Dispatchers.IO) {
+                                try {
+                                    repository.fetchGamesSync(league, todayStr)
+                                } catch (e: Exception) {
+                                    emptyList()
+                                }
                             }
-                        }
+                        )
                     }
-                    deferredList.awaitAll().flatten()
+                    deferredList.awaitAll().flatten().distinctBy { it.id }
                 } ?: emptyList()
             } catch (e: Exception) {
                 emptyList()

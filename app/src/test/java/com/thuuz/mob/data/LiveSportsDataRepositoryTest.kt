@@ -1,6 +1,7 @@
 package com.thuuz.mob.data
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.json.JSONObject
 import com.thuuz.gtv.game.GameExcitementCalculator
@@ -118,5 +119,27 @@ class LiveSportsDataRepositoryTest {
         )
         
         assertEquals(100, excitement)
+    }
+
+    @Test
+    fun testSupplementalNcaamExhibitionScores_KansasAndUcla() {
+        val repo = LiveSportsDataRepository()
+        val games = repo.getSupplementalNcaamGames("20261021")
+        
+        val kuGame = games.firstOrNull { it.id == "ncaam_exh_20261021_lou_ku" }
+        assertNotNull(kuGame)
+        assertEquals("Kansas Jayhawks", kuGame!!.homeTeam.name)
+        assertEquals(83, kuGame.homeTeam.score)
+        assertEquals("Louisville Cardinals", kuGame.awayTeam.name)
+        assertEquals(89, kuGame.awayTeam.score)
+        assertEquals("Final (Exh)", kuGame.period)
+
+        val uclaGame = games.firstOrNull { it.id == "ncaam_exh_20261021_cbu_ucla" }
+        assertNotNull(uclaGame)
+        assertEquals("UCLA Bruins", uclaGame!!.homeTeam.name)
+        assertEquals(100, uclaGame.homeTeam.score)
+        assertEquals("California Baptist Lancers", uclaGame.awayTeam.name)
+        assertEquals(53, uclaGame.awayTeam.score)
+        assertEquals("Final (Exh)", uclaGame.period)
     }
 }
