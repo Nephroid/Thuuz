@@ -84,19 +84,27 @@ data class Game(
     val startTime: String? = null
 )
 
-fun parseGameStartTimeMillis(startTime: String?): Long {
-    if (startTime.isNullOrBlank()) return Long.MAX_VALUE
-    val formats = listOf(
-        "yyyy-MM-dd'T'HH:mm'Z'",
-        "yyyy-MM-dd'T'HH:mm:ss'Z'",
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    )
-    for (fmt in formats) {
-        try {
-            val sdf = SimpleDateFormat(fmt, Locale.US).apply {
+private val dateFormatters = listOf(
+    "yyyy-MM-dd'T'HH:mm'Z'",
+    "yyyy-MM-dd'T'HH:mm:ss'Z'",
+    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+).map { format ->
+    object : ThreadLocal<SimpleDateFormat>() {
+        override fun initialValue(): SimpleDateFormat {
+            return SimpleDateFormat(format, Locale.US).apply {
                 timeZone = TimeZone.getTimeZone("UTC")
             }
-            val date = sdf.parse(startTime)
+        }
+    }
+}
+
+fun parseGameStartTimeMillis(startTime: String?): Long {
+    if (startTime.isNullOrBlank()) return Long.MAX_VALUE
+    // ⚡ Bolt Optimization: Caching SimpleDateFormat in ThreadLocal avoids heavy memory allocations
+    // during list sorting. The try-catch loop mirrors original behavior to ensure 100% correctness.
+    for (formatter in dateFormatters) {
+        try {
+            val date = formatter.get()?.parse(startTime)
             if (date != null) return date.time
         } catch (_: Exception) {}
     }
