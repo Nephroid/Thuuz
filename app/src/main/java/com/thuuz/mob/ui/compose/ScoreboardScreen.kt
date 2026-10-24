@@ -807,11 +807,15 @@ fun ScoreboardScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 items(filteredGames, key = { it.id }) { game ->
-                    val homeIsFav = favoriteTeams.any { fav ->
-                        favMgr.matchesFavorite(fav, game.homeTeam.name, game.homeTeam.shortName, game.homeTeam.abbreviation)
+                    val homeIsFav = remember(favoriteTeams, game.homeTeam.name) {
+                        favoriteTeams.any { fav ->
+                            favMgr.matchesFavorite(fav, game.homeTeam.name, game.homeTeam.shortName, game.homeTeam.abbreviation)
+                        }
                     }
-                    val awayIsFav = favoriteTeams.any { fav ->
-                        favMgr.matchesFavorite(fav, game.awayTeam.name, game.awayTeam.shortName, game.awayTeam.abbreviation)
+                    val awayIsFav = remember(favoriteTeams, game.awayTeam.name) {
+                        favoriteTeams.any { fav ->
+                            favMgr.matchesFavorite(fav, game.awayTeam.name, game.awayTeam.shortName, game.awayTeam.abbreviation)
+                        }
                     }
                     val isRevealed = revealedGamesState.contains(game.id)
 

@@ -1,0 +1,3 @@
+## 2025-02-18 - Jetpack Compose Recomposition Regex Allocation
+**Learning:** Re-instantiating `Regex` inside a function called frequently by a hot Jetpack Compose list (like `items`) triggers high GC churn. Wrapping list item view calculations in `remember` (when keyed correctly) is crucial to avoid evaluating expensive search logic on every scroll/recomposition frame.
+**Action:** Always verify that regular expressions used in hot paths or core data classes are allocated statically (e.g. in companion objects). When using Jetpack Compose, use `remember` for complex calculations passed down to standard components within Lazy columns.
