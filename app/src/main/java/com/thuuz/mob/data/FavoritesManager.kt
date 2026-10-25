@@ -9,6 +9,7 @@ class FavoritesManager(context: Context) {
     companion object {
         private const val PREFS_NAME = "thuuz_favorites_prefs"
         private const val KEY_FAVORITE_TEAMS = "key_favorite_teams"
+        private val DELIMITER_REGEX = Regex("[\\s\\-./]+")
 
         @Volatile
         private var INSTANCE: FavoritesManager? = null
@@ -33,8 +34,11 @@ class FavoritesManager(context: Context) {
         }
     }
 
+    private fun stripApostrophes(s: String): String {
+        return s.replace("'", "").replace("’", "")
+    }
+
     fun matchesFavorite(favorite: String, teamName: String, shortName: String? = null, abbreviation: String? = null): Boolean {
-        val stripApostrophes = { s: String -> s.replace("'", "").replace("’", "") }
         val favClean = stripApostrophes(favorite.trim().lowercase())
         if (favClean.isEmpty()) return false
 
@@ -51,10 +55,9 @@ class FavoritesManager(context: Context) {
         }
 
         // 2. Word token match (e.g. "Celtics" matches "Boston Celtics", "LA" matches "LA Clippers")
-        val delimiter = Regex("[\\s\\-./]+")
-        val nameWords = nameClean.split(delimiter).filter { it.isNotEmpty() }
-        val shortWords = shortClean.split(delimiter).filter { it.isNotEmpty() }
-        val favWords = favClean.split(delimiter).filter { it.isNotEmpty() }
+        val nameWords = nameClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
+        val shortWords = shortClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
+        val favWords = favClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
 
         if (nameWords.any { it == favClean } ||
             shortWords.any { it == favClean } ||
