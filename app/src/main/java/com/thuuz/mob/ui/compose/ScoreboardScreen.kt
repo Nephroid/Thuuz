@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.thuuz.mob.data.FavoritesManager
 import com.thuuz.mob.data.SettingsManager
+import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -84,21 +85,25 @@ data class Game(
     val startTime: String? = null
 )
 
+private val gameTimeFormatters = object : ThreadLocal<Array<SimpleDateFormat>>() {
+    override fun initialValue(): Array<SimpleDateFormat> {
+        return arrayOf(
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'", Locale.US).apply { timeZone = TimeZone.getTimeZone("UTC") },
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US).apply { timeZone = TimeZone.getTimeZone("UTC") },
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US).apply { timeZone = TimeZone.getTimeZone("UTC") }
+        )
+    }
+}
+
 fun parseGameStartTimeMillis(startTime: String?): Long {
     if (startTime.isNullOrBlank()) return Long.MAX_VALUE
-    val formats = listOf(
-        "yyyy-MM-dd'T'HH:mm'Z'",
-        "yyyy-MM-dd'T'HH:mm:ss'Z'",
-        "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    )
-    for (fmt in formats) {
-        try {
-            val sdf = SimpleDateFormat(fmt, Locale.US).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
-            val date = sdf.parse(startTime)
+
+    val formatters = gameTimeFormatters.get()
+    if (formatters != null) {
+        for (sdf in formatters) {
+            val date = sdf.parse(startTime, ParsePosition(0))
             if (date != null) return date.time
-        } catch (_: Exception) {}
+        }
     }
     return Long.MAX_VALUE
 }

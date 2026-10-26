@@ -1,0 +1,3 @@
+## 2024-11-20 - [Performance] SimpleDateFormat inside Composables
+**Learning:** Initializing `SimpleDateFormat` repeatedly within Composable logic or high-frequency loops (like sorting lists in a remember block or evaluating each game) creates massive garbage collection pressure and slows down rendering/sorting.
+**Action:** Replace `SimpleDateFormat` instantiation inside `parseGameStartTimeMillis` and formatting methods with `java.time.Instant.parse` (requires API 26 or Java 8 desugaring), or pull `SimpleDateFormat` instantiations to `ThreadLocal` or top-level val if desugaring isn't an option.
