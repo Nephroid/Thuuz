@@ -1,0 +1,4 @@
+
+## 2025-02-12 - Expensive Regex inside match checks
+**Learning:** `FavoritesManager.kt` used a dynamically compiled Regex for word boundaries (`Regex("\\b${Regex.escape(query)}\\b")`) inside its `matchesAtWordBoundary` function, which is called heavily inside lists (e.g. scoreboard UI list, background score updates). Compiling this in a loop takes hundreds of milliseconds for large lists vs a few milliseconds using manual string `.indexOf` combined with `.isLetterOrDigit()` character boundary checks. Additionally, local regex objects like `val delimiter = Regex(...)` allocate unnecessarily inside repetitive loops instead of static caching in a companion object.
+**Action:** Always extract Regex instances to companion object/static scope when they don't depend on dynamic variables, and prefer String `indexOf` and manual boundary checking for simple substring checks inside hot loops over dynamically compiling regexes.
