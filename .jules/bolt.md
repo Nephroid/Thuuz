@@ -1,0 +1,3 @@
+## 2023-10-29 - [Avoid dynamic Regex compilation in hot loops]
+**Learning:** Compiling `Regex` objects dynamically (e.g. inside a filtering hot loop, like `Regex("\\b${Regex.escape(query)}\\b")`) causes massive performance bottlenecks and unnecessary memory allocations in Kotlin. This is especially true for list filtering in real-time search.
+**Action:** Extract static `Regex` patterns to `companion object` constants. For dynamic patterns, prefer manual string operations (e.g., `indexOf` combined with character checks like `isLetterOrDigit`) over dynamic regular expressions for high-frequency operations.
