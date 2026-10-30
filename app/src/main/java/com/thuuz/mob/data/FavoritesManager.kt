@@ -51,10 +51,11 @@ class FavoritesManager(context: Context) {
         }
 
         // 2. Word token match (e.g. "Celtics" matches "Boston Celtics", "LA" matches "LA Clippers")
-        val delimiter = Regex("[\\s\\-./]+")
-        val nameWords = nameClean.split(delimiter).filter { it.isNotEmpty() }
-        val shortWords = shortClean.split(delimiter).filter { it.isNotEmpty() }
-        val favWords = favClean.split(delimiter).filter { it.isNotEmpty() }
+        // BOLT OPTIMIZATION: Replaced dynamic Regex compilation with manual string splitting
+        // to avoid high allocation and matching overhead on hot path.
+        val nameWords = splitByDelimiter(nameClean)
+        val shortWords = splitByDelimiter(shortClean)
+        val favWords = splitByDelimiter(favClean)
 
         if (nameWords.any { it == favClean } ||
             shortWords.any { it == favClean } ||
@@ -86,7 +87,54 @@ class FavoritesManager(context: Context) {
 
     private fun matchesAtWordBoundary(query: String, target: String): Boolean {
         if (query.length < 4 || target.length < 4) return false
-        return Regex("\\b${Regex.escape(query)}\\b").containsMatchIn(target)
+
+        // BOLT OPTIMIZATION: Replaced dynamic Regex compilation for word boundary checks
+        // with manual string search to eliminate pattern compilation overhead.
+        var startIndex = 0
+        while (true) {
+            val idx = target.indexOf(query, startIndex)
+            if (idx == -1) return false
+
+            val prevIsWord = if (idx > 0) isWordChar(target[idx - 1]) else false
+            val nextIsWord = if (idx + query.length < target.length) isWordChar(target[idx + query.length]) else false
+
+            val queryStartIsWord = isWordChar(query[0])
+            val queryEndIsWord = isWordChar(query[query.length - 1])
+
+            // A word boundary exists if there's a transition between a word character and a non-word character
+            if (prevIsWord != queryStartIsWord && nextIsWord != queryEndIsWord) {
+                return true
+            }
+
+            startIndex = idx + 1
+        }
+    }
+
+    private fun isWordChar(c: Char): Boolean {
+        return c in 'a'..'z' || c in 'A'..'Z' || c in '0'..'9' || c == '_'
+    }
+
+    private fun splitByDelimiter(str: String): List<String> {
+        val result = mutableListOf<String>()
+        var start = 0
+        while (start < str.length) {
+            while (start < str.length && isDelimiter(str[start])) {
+                start++
+            }
+            if (start >= str.length) break
+
+            var end = start
+            while (end < str.length && !isDelimiter(str[end])) {
+                end++
+            }
+            result.add(str.substring(start, end))
+            start = end
+        }
+        return result
+    }
+
+    private fun isDelimiter(c: Char): Boolean {
+        return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '-' || c == '.' || c == '/'
     }
 
     fun toggleFavoriteTeam(teamName: String, shortName: String? = null, abbreviation: String? = null): Boolean {
