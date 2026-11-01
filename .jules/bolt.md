@@ -1,0 +1,3 @@
+## 2024-05-14 - Kotlin Regex compilation overhead inside hot loops
+**Learning:** Compiling dynamic Kotlin `Regex` objects (or even static ones) inside high-frequency functions like search matchers adds extreme overhead compared to primitive string operations. Furthermore, defining lambdas inside these same loops leads to continuous, unnecessary memory allocations (closures) on the heap.
+**Action:** Extract static regexes into `companion object` constants and pull in-line lambdas out into private helper methods. For dynamic patterns, whenever possible substitute dynamic regexes (e.g., word boundary checks `\b`) with allocation-free manual `indexOf` loops with primitive char boundary validations.

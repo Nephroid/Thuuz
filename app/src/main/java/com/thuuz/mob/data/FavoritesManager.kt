@@ -9,6 +9,7 @@ class FavoritesManager(context: Context) {
     companion object {
         private const val PREFS_NAME = "thuuz_favorites_prefs"
         private const val KEY_FAVORITE_TEAMS = "key_favorite_teams"
+        private val DELIMITER_REGEX = Regex("[\\s\\-./]+")
 
         @Volatile
         private var INSTANCE: FavoritesManager? = null
@@ -33,8 +34,9 @@ class FavoritesManager(context: Context) {
         }
     }
 
+    private fun stripApostrophes(s: String): String = s.replace("'", "").replace("’", "")
+
     fun matchesFavorite(favorite: String, teamName: String, shortName: String? = null, abbreviation: String? = null): Boolean {
-        val stripApostrophes = { s: String -> s.replace("'", "").replace("’", "") }
         val favClean = stripApostrophes(favorite.trim().lowercase())
         if (favClean.isEmpty()) return false
 
@@ -51,10 +53,9 @@ class FavoritesManager(context: Context) {
         }
 
         // 2. Word token match (e.g. "Celtics" matches "Boston Celtics", "LA" matches "LA Clippers")
-        val delimiter = Regex("[\\s\\-./]+")
-        val nameWords = nameClean.split(delimiter).filter { it.isNotEmpty() }
-        val shortWords = shortClean.split(delimiter).filter { it.isNotEmpty() }
-        val favWords = favClean.split(delimiter).filter { it.isNotEmpty() }
+        val nameWords = nameClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
+        val shortWords = shortClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
+        val favWords = favClean.split(DELIMITER_REGEX).filter { it.isNotEmpty() }
 
         if (nameWords.any { it == favClean } ||
             shortWords.any { it == favClean } ||
@@ -84,9 +85,23 @@ class FavoritesManager(context: Context) {
         return false
     }
 
+    private fun isWordChar(c: Char): Boolean = c.isLetterOrDigit() || c == '_'
+
     private fun matchesAtWordBoundary(query: String, target: String): Boolean {
         if (query.length < 4 || target.length < 4) return false
-        return Regex("\\b${Regex.escape(query)}\\b").containsMatchIn(target)
+        var startIndex = 0
+        while (true) {
+            val index = target.indexOf(query, startIndex)
+            if (index == -1) return false
+
+            val isStartBoundary = index == 0 || !isWordChar(target[index - 1])
+            val endIndex = index + query.length
+            val isEndBoundary = endIndex == target.length || !isWordChar(target[endIndex])
+
+            if (isStartBoundary && isEndBoundary) return true
+
+            startIndex = index + 1
+        }
     }
 
     fun toggleFavoriteTeam(teamName: String, shortName: String? = null, abbreviation: String? = null): Boolean {
